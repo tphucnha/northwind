@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="purchaseOrder">
+      <h2 data-cy="purchaseOrderDetailsHeading"><span jhiTranslate="northwindApp.purchaseOrder.detail.title">Purchase Order</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ purchaseOrder.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'northwindApp.PurchaseOrderStatus.' + purchaseOrder.status }}">{{ purchaseOrder.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.createDate">Create Date</span></dt>
+        <dd>
+          <span>{{ purchaseOrder.createDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.expectedDate">Expected Date</span></dt>
+        <dd>
+          <span>{{ purchaseOrder.expectedDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.paymentDate">Payment Date</span></dt>
+        <dd>
+          <span>{{ purchaseOrder.paymentDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.paymentMethod">Payment Method</span></dt>
+        <dd>
+          <span>{{ purchaseOrder.paymentMethod }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.paymentAmount">Payment Amount</span></dt>
+        <dd>
+          <span>{{ purchaseOrder.paymentAmount }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.supplier">Supplier</span></dt>
+        <dd>
+          <div *ngIf="purchaseOrder.supplier">
+            <a [routerLink]="['/supplier', purchaseOrder.supplier?.id, 'view']">{{ purchaseOrder.supplier?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrder.inventoryTransaction">Inventory Transaction</span></dt>
+        <dd>
+          <div *ngIf="purchaseOrder.inventoryTransaction">
+            <a [routerLink]="['/inventory-transaction', purchaseOrder.inventoryTransaction?.id, 'view']">{{
+              purchaseOrder.inventoryTransaction?.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/purchase-order', purchaseOrder.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

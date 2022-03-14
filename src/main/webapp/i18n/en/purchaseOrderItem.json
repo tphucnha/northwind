@@ -1,0 +1,29 @@
+{
+  "northwindApp": {
+    "purchaseOrderItem": {
+      "home": {
+        "title": "Purchase Order Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Purchase Order Item",
+        "createOrEditLabel": "Create or edit a Purchase Order Item",
+        "notFound": "No Purchase Order Items found"
+      },
+      "created": "A new Purchase Order Item is created with identifier {{ param }}",
+      "updated": "A Purchase Order Item is updated with identifier {{ param }}",
+      "deleted": "A Purchase Order Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Purchase Order Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Purchase Order Item"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "unitCost": "Unit Cost",
+      "receivedDate": "Received Date",
+      "inventoryPosted": "Inventory Posted",
+      "product": "Product",
+      "purchaseOrder": "Purchase Order"
+    }
+  }
+}

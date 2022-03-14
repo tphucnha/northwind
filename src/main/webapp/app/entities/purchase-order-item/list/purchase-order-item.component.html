@@ -1,0 +1,92 @@
+<div>
+  <h2 id="page-heading" data-cy="PurchaseOrderItemHeading">
+    <span jhiTranslate="northwindApp.purchaseOrderItem.home.title">Purchase Order Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="northwindApp.purchaseOrderItem.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-purchase-order-item"
+        [routerLink]="['/purchase-order-item/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="northwindApp.purchaseOrderItem.home.createLabel"> Create a new Purchase Order Item </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="purchaseOrderItems?.length === 0">
+    <span jhiTranslate="northwindApp.purchaseOrderItem.home.notFound">No purchaseOrderItems found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="purchaseOrderItems && purchaseOrderItems.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.quantity">Quantity</span></th>
+          <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.unitCost">Unit Cost</span></th>
+          <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.receivedDate">Received Date</span></th>
+          <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.inventoryPosted">Inventory Posted</span></th>
+          <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.purchaseOrder">Purchase Order</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let purchaseOrderItem of purchaseOrderItems; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/purchase-order-item', purchaseOrderItem.id, 'view']">{{ purchaseOrderItem.id }}</a>
+          </td>
+          <td>{{ purchaseOrderItem.quantity }}</td>
+          <td>{{ purchaseOrderItem.unitCost }}</td>
+          <td>{{ purchaseOrderItem.receivedDate | formatMediumDatetime }}</td>
+          <td>{{ purchaseOrderItem.inventoryPosted }}</td>
+          <td>
+            <div *ngIf="purchaseOrderItem.purchaseOrder">
+              <a [routerLink]="['/purchase-order', purchaseOrderItem.purchaseOrder?.id, 'view']">{{
+                purchaseOrderItem.purchaseOrder?.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/purchase-order-item', purchaseOrderItem.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/purchase-order-item', purchaseOrderItem.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(purchaseOrderItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

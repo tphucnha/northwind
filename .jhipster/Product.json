@@ -1,0 +1,88 @@
+{
+  "applications": ["Northwind"],
+  "changelogDate": "20220314082417",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "product",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "standardCost",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "listPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "reorderLevel",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "targetLevel",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "quantityPerUnit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "disContinued",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "minimumReorderQuantity",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Product",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "category",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "supplier",
+      "otherEntityRelationshipName": "products",
+      "ownerSide": true,
+      "relationshipName": "suppliers",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "orderItem",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "orderItem",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "purchaseOrderItem",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "purchaseOrderItem",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "inventoryTransaction",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "inventoryTransaction",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

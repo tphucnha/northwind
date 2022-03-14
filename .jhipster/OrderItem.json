@@ -1,0 +1,50 @@
+{
+  "applications": ["Northwind"],
+  "changelogDate": "20220314082416",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "order_item",
+  "fields": [
+    {
+      "fieldName": "quantity",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "unitPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "discount",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "OrderItemStatus",
+      "fieldValues": "NONE,ALLOCATED,INVOICED,SHIPPED,ON_ORDER,NO_STOCK"
+    },
+    {
+      "fieldName": "allocatedDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "OrderItem",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "orderItem",
+      "relationshipName": "product",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "customerOrder",
+      "otherEntityRelationshipName": "orderItems",
+      "relationshipName": "order",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -1,0 +1,56 @@
+{
+  "applications": ["Northwind"],
+  "changelogDate": "20220314082414",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "inventory_transaction",
+  "fields": [
+    {
+      "fieldName": "transactionType",
+      "fieldType": "InventoryTransactionType",
+      "fieldValues": "PURCHASED,SOLD,ON_HOLD,WASTE"
+    },
+    {
+      "fieldName": "createDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "comments",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "InventoryTransaction",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "customerOrder",
+      "otherEntityRelationshipName": "inventoryTransaction",
+      "relationshipName": "order",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "inventoryTransaction",
+      "relationshipName": "product",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "purchaseOrder",
+      "otherEntityRelationshipName": "inventoryTransaction",
+      "relationshipName": "purchaseOrder",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

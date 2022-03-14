@@ -1,0 +1,155 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-purchase-order-heading"
+        data-cy="PurchaseOrderCreateUpdateHeading"
+        jhiTranslate="northwindApp.purchaseOrder.home.createOrEditLabel"
+      >
+        Create or edit a Purchase Order
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'northwindApp.PurchaseOrderStatus.null' | translate }}</option>
+            <option *ngFor="let purchaseOrderStatus of purchaseOrderStatusValues" [value]="purchaseOrderStatus">
+              {{ 'northwindApp.PurchaseOrderStatus.' + purchaseOrderStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.createDate" for="field_createDate">Create Date</label>
+          <div class="d-flex">
+            <input
+              id="field_createDate"
+              data-cy="createDate"
+              type="datetime-local"
+              class="form-control"
+              name="createDate"
+              formControlName="createDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.expectedDate" for="field_expectedDate">Expected Date</label>
+          <div class="d-flex">
+            <input
+              id="field_expectedDate"
+              data-cy="expectedDate"
+              type="datetime-local"
+              class="form-control"
+              name="expectedDate"
+              formControlName="expectedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.paymentDate" for="field_paymentDate">Payment Date</label>
+          <div class="d-flex">
+            <input
+              id="field_paymentDate"
+              data-cy="paymentDate"
+              type="datetime-local"
+              class="form-control"
+              name="paymentDate"
+              formControlName="paymentDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.paymentMethod" for="field_paymentMethod">Payment Method</label>
+          <input
+            type="text"
+            class="form-control"
+            name="paymentMethod"
+            id="field_paymentMethod"
+            data-cy="paymentMethod"
+            formControlName="paymentMethod"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.paymentAmount" for="field_paymentAmount">Payment Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="paymentAmount"
+            id="field_paymentAmount"
+            data-cy="paymentAmount"
+            formControlName="paymentAmount"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.supplier" for="field_supplier">Supplier</label>
+          <select class="form-control" id="field_supplier" data-cy="supplier" name="supplier" formControlName="supplier">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="supplierOption.id === editForm.get('supplier')!.value?.id ? editForm.get('supplier')!.value : supplierOption"
+              *ngFor="let supplierOption of suppliersSharedCollection; trackBy: trackSupplierById"
+            >
+              {{ supplierOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.inventoryTransaction" for="field_inventoryTransaction"
+            >Inventory Transaction</label
+          >
+          <select
+            class="form-control"
+            id="field_inventoryTransaction"
+            data-cy="inventoryTransaction"
+            name="inventoryTransaction"
+            formControlName="inventoryTransaction"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                inventoryTransactionOption.id === editForm.get('inventoryTransaction')!.value?.id
+                  ? editForm.get('inventoryTransaction')!.value
+                  : inventoryTransactionOption
+              "
+              *ngFor="let inventoryTransactionOption of inventoryTransactionsSharedCollection; trackBy: trackInventoryTransactionById"
+            >
+              {{ inventoryTransactionOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

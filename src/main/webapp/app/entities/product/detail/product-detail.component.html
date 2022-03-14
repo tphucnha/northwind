@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="product">
+      <h2 data-cy="productDetailsHeading"><span jhiTranslate="northwindApp.product.detail.title">Product</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ product.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.code">Code</span></dt>
+        <dd>
+          <span>{{ product.code }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.name">Name</span></dt>
+        <dd>
+          <span>{{ product.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.description">Description</span></dt>
+        <dd>
+          <span>{{ product.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.standardCost">Standard Cost</span></dt>
+        <dd>
+          <span>{{ product.standardCost }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.listPrice">List Price</span></dt>
+        <dd>
+          <span>{{ product.listPrice }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.reorderLevel">Reorder Level</span></dt>
+        <dd>
+          <span>{{ product.reorderLevel }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.targetLevel">Target Level</span></dt>
+        <dd>
+          <span>{{ product.targetLevel }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.quantityPerUnit">Quantity Per Unit</span></dt>
+        <dd>
+          <span>{{ product.quantityPerUnit }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.disContinued">Dis Continued</span></dt>
+        <dd>
+          <span>{{ product.disContinued }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.minimumReorderQuantity">Minimum Reorder Quantity</span></dt>
+        <dd>
+          <span>{{ product.minimumReorderQuantity }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.category">Category</span></dt>
+        <dd>
+          <div *ngIf="product.category">
+            <a [routerLink]="['/category', product.category?.id, 'view']">{{ product.category?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.suppliers">Suppliers</span></dt>
+        <dd>
+          <span *ngFor="let suppliers of product.suppliers; let last = last">
+            <a [routerLink]="['/supplier', suppliers?.id, 'view']">{{ suppliers.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.orderItem">Order Item</span></dt>
+        <dd>
+          <div *ngIf="product.orderItem">
+            <a [routerLink]="['/order-item', product.orderItem?.id, 'view']">{{ product.orderItem?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.purchaseOrderItem">Purchase Order Item</span></dt>
+        <dd>
+          <div *ngIf="product.purchaseOrderItem">
+            <a [routerLink]="['/purchase-order-item', product.purchaseOrderItem?.id, 'view']">{{ product.purchaseOrderItem?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.product.inventoryTransaction">Inventory Transaction</span></dt>
+        <dd>
+          <div *ngIf="product.inventoryTransaction">
+            <a [routerLink]="['/inventory-transaction', product.inventoryTransaction?.id, 'view']">{{
+              product.inventoryTransaction?.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

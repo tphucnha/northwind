@@ -1,0 +1,38 @@
+{
+  "northwindApp": {
+    "product": {
+      "home": {
+        "title": "Products",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Product",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Product",
+        "notFound": "No Products found"
+      },
+      "created": "Một Product mới được tạo với định danh {{ param }}",
+      "updated": "Một Product cập nhật với định danh {{ param }}",
+      "deleted": "Một Product đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Product {{ id }}?"
+      },
+      "detail": {
+        "title": "Product"
+      },
+      "id": "ID",
+      "code": "Code",
+      "name": "Name",
+      "description": "Description",
+      "standardCost": "Standard Cost",
+      "listPrice": "List Price",
+      "reorderLevel": "Reorder Level",
+      "targetLevel": "Target Level",
+      "quantityPerUnit": "Quantity Per Unit",
+      "disContinued": "Dis Continued",
+      "minimumReorderQuantity": "Minimum Reorder Quantity",
+      "category": "Category",
+      "suppliers": "Suppliers",
+      "orderItem": "Order Item",
+      "purchaseOrderItem": "Purchase Order Item",
+      "inventoryTransaction": "Inventory Transaction"
+    }
+  }
+}

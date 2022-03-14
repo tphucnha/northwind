@@ -1,0 +1,44 @@
+{
+  "applications": ["Northwind"],
+  "changelogDate": "20220314082420",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "supplier",
+  "fields": [
+    {
+      "fieldName": "company",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Supplier",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "suppliers",
+      "ownerSide": false,
+      "relationshipName": "products",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -1,0 +1,60 @@
+{
+  "applications": ["Northwind"],
+  "changelogDate": "20220314082418",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "purchase_order",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "PurchaseOrderStatus",
+      "fieldValues": "NEW,SUBMITTED,APPROVED,CLOSED"
+    },
+    {
+      "fieldName": "createDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "expectedDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "paymentDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "paymentMethod",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paymentAmount",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PurchaseOrder",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "purchaseOrderItem",
+      "otherEntityRelationshipName": "purchaseOrder",
+      "relationshipName": "orderItems",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "supplier",
+      "otherEntityRelationshipName": "purchaseOrder",
+      "relationshipName": "supplier",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "inventoryTransaction",
+      "otherEntityRelationshipName": "purchaseOrder",
+      "relationshipName": "inventoryTransaction",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

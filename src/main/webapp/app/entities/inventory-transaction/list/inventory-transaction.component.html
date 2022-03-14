@@ -1,0 +1,98 @@
+<div>
+  <h2 id="page-heading" data-cy="InventoryTransactionHeading">
+    <span jhiTranslate="northwindApp.inventoryTransaction.home.title">Inventory Transactions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="northwindApp.inventoryTransaction.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inventory-transaction"
+        [routerLink]="['/inventory-transaction/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="northwindApp.inventoryTransaction.home.createLabel"> Create a new Inventory Transaction </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="inventoryTransactions?.length === 0">
+    <span jhiTranslate="northwindApp.inventoryTransaction.home.notFound">No inventoryTransactions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="inventoryTransactions && inventoryTransactions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="transactionType">
+            <span jhiTranslate="northwindApp.inventoryTransaction.transactionType">Transaction Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createDate">
+            <span jhiTranslate="northwindApp.inventoryTransaction.createDate">Create Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="modifiedDate">
+            <span jhiTranslate="northwindApp.inventoryTransaction.modifiedDate">Modified Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="quantity">
+            <span jhiTranslate="northwindApp.inventoryTransaction.quantity">Quantity</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="comments">
+            <span jhiTranslate="northwindApp.inventoryTransaction.comments">Comments</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let inventoryTransaction of inventoryTransactions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/inventory-transaction', inventoryTransaction.id, 'view']">{{ inventoryTransaction.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'northwindApp.InventoryTransactionType.' + inventoryTransaction.transactionType }}">
+            {{ inventoryTransaction.transactionType }}
+          </td>
+          <td>{{ inventoryTransaction.createDate | formatMediumDatetime }}</td>
+          <td>{{ inventoryTransaction.modifiedDate | formatMediumDatetime }}</td>
+          <td>{{ inventoryTransaction.quantity }}</td>
+          <td>{{ inventoryTransaction.comments }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/inventory-transaction', inventoryTransaction.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/inventory-transaction', inventoryTransaction.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(inventoryTransaction)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

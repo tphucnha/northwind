@@ -1,0 +1,32 @@
+{
+  "northwindApp": {
+    "purchaseOrder": {
+      "home": {
+        "title": "Purchase Orders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Purchase Order",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Purchase Order",
+        "notFound": "No Purchase Orders found"
+      },
+      "created": "Một Purchase Order mới được tạo với định danh {{ param }}",
+      "updated": "Một Purchase Order cập nhật với định danh {{ param }}",
+      "deleted": "Một Purchase Order đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Purchase Order {{ id }}?"
+      },
+      "detail": {
+        "title": "Purchase Order"
+      },
+      "id": "ID",
+      "status": "Status",
+      "createDate": "Create Date",
+      "expectedDate": "Expected Date",
+      "paymentDate": "Payment Date",
+      "paymentMethod": "Payment Method",
+      "paymentAmount": "Payment Amount",
+      "orderItems": "Order Items",
+      "supplier": "Supplier",
+      "inventoryTransaction": "Inventory Transaction"
+    }
+  }
+}

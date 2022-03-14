@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="purchaseOrderItem">
+      <h2 data-cy="purchaseOrderItemDetailsHeading">
+        <span jhiTranslate="northwindApp.purchaseOrderItem.detail.title">Purchase Order Item</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ purchaseOrderItem.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrderItem.quantity">Quantity</span></dt>
+        <dd>
+          <span>{{ purchaseOrderItem.quantity }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrderItem.unitCost">Unit Cost</span></dt>
+        <dd>
+          <span>{{ purchaseOrderItem.unitCost }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrderItem.receivedDate">Received Date</span></dt>
+        <dd>
+          <span>{{ purchaseOrderItem.receivedDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrderItem.inventoryPosted">Inventory Posted</span></dt>
+        <dd>
+          <span>{{ purchaseOrderItem.inventoryPosted }}</span>
+        </dd>
+        <dt><span jhiTranslate="northwindApp.purchaseOrderItem.purchaseOrder">Purchase Order</span></dt>
+        <dd>
+          <div *ngIf="purchaseOrderItem.purchaseOrder">
+            <a [routerLink]="['/purchase-order', purchaseOrderItem.purchaseOrder?.id, 'view']">{{ purchaseOrderItem.purchaseOrder?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/purchase-order-item', purchaseOrderItem.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

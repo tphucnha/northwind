@@ -1,0 +1,35 @@
+{
+  "northwindApp": {
+    "customerOrder": {
+      "home": {
+        "title": "Customer Orders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Customer Order",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Customer Order",
+        "notFound": "No Customer Orders found"
+      },
+      "created": "Một Customer Order mới được tạo với định danh {{ param }}",
+      "updated": "Một Customer Order cập nhật với định danh {{ param }}",
+      "deleted": "Một Customer Order đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Customer Order {{ id }}?"
+      },
+      "detail": {
+        "title": "Customer Order"
+      },
+      "id": "ID",
+      "orderDate": "Order Date",
+      "shippedDate": "Shipped Date",
+      "shipAddress": "Ship Address",
+      "shippingFee": "Shipping Fee",
+      "taxes": "Taxes",
+      "paymentMethod": "Payment Method",
+      "paidDate": "Paid Date",
+      "status": "Status",
+      "notes": "Notes",
+      "customer": "Customer",
+      "orderItems": "Order Items",
+      "inventoryTransaction": "Inventory Transaction"
+    }
+  }
+}

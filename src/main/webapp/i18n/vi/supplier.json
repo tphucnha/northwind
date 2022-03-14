@@ -1,0 +1,29 @@
+{
+  "northwindApp": {
+    "supplier": {
+      "home": {
+        "title": "Suppliers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Supplier",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Supplier",
+        "notFound": "No Suppliers found"
+      },
+      "created": "Một Supplier mới được tạo với định danh {{ param }}",
+      "updated": "Một Supplier cập nhật với định danh {{ param }}",
+      "deleted": "Một Supplier đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Supplier {{ id }}?"
+      },
+      "detail": {
+        "title": "Supplier"
+      },
+      "id": "ID",
+      "company": "Company",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "address": "Address",
+      "phone": "Phone",
+      "products": "Products"
+    }
+  }
+}

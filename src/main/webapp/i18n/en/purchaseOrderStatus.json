@@ -1,0 +1,11 @@
+{
+  "northwindApp": {
+    "PurchaseOrderStatus": {
+      "null": "",
+      "NEW": "NEW",
+      "SUBMITTED": "SUBMITTED",
+      "APPROVED": "APPROVED",
+      "CLOSED": "CLOSED"
+    }
+  }
+}

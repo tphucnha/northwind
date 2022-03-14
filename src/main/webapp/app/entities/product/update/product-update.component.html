@@ -1,0 +1,225 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-product-heading" data-cy="ProductCreateUpdateHeading" jhiTranslate="northwindApp.product.home.createOrEditLabel">
+        Create or edit a Product
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.code" for="field_code">Code</label>
+          <input type="text" class="form-control" name="code" id="field_code" data-cy="code" formControlName="code" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.standardCost" for="field_standardCost">Standard Cost</label>
+          <input
+            type="number"
+            class="form-control"
+            name="standardCost"
+            id="field_standardCost"
+            data-cy="standardCost"
+            formControlName="standardCost"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.listPrice" for="field_listPrice">List Price</label>
+          <input type="number" class="form-control" name="listPrice" id="field_listPrice" data-cy="listPrice" formControlName="listPrice" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.reorderLevel" for="field_reorderLevel">Reorder Level</label>
+          <input
+            type="number"
+            class="form-control"
+            name="reorderLevel"
+            id="field_reorderLevel"
+            data-cy="reorderLevel"
+            formControlName="reorderLevel"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.targetLevel" for="field_targetLevel">Target Level</label>
+          <input
+            type="number"
+            class="form-control"
+            name="targetLevel"
+            id="field_targetLevel"
+            data-cy="targetLevel"
+            formControlName="targetLevel"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.quantityPerUnit" for="field_quantityPerUnit"
+            >Quantity Per Unit</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="quantityPerUnit"
+            id="field_quantityPerUnit"
+            data-cy="quantityPerUnit"
+            formControlName="quantityPerUnit"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.disContinued" for="field_disContinued">Dis Continued</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="disContinued"
+            id="field_disContinued"
+            data-cy="disContinued"
+            formControlName="disContinued"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.minimumReorderQuantity" for="field_minimumReorderQuantity"
+            >Minimum Reorder Quantity</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="minimumReorderQuantity"
+            id="field_minimumReorderQuantity"
+            data-cy="minimumReorderQuantity"
+            formControlName="minimumReorderQuantity"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.category" for="field_category">Category</label>
+          <select class="form-control" id="field_category" data-cy="category" name="category" formControlName="category">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="categoryOption.id === editForm.get('category')!.value?.id ? editForm.get('category')!.value : categoryOption"
+              *ngFor="let categoryOption of categoriesSharedCollection; trackBy: trackCategoryById"
+            >
+              {{ categoryOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="northwindApp.product.suppliers" for="field_suppliers">Suppliers</label>
+          <select class="form-control" id="field_suppliers" data-cy="suppliers" multiple name="suppliers" formControlName="suppliers">
+            <option
+              [ngValue]="getSelectedSupplier(supplierOption, editForm.get('suppliers')!.value)"
+              *ngFor="let supplierOption of suppliersSharedCollection; trackBy: trackSupplierById"
+            >
+              {{ supplierOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.orderItem" for="field_orderItem">Order Item</label>
+          <select class="form-control" id="field_orderItem" data-cy="orderItem" name="orderItem" formControlName="orderItem">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="orderItemOption.id === editForm.get('orderItem')!.value?.id ? editForm.get('orderItem')!.value : orderItemOption"
+              *ngFor="let orderItemOption of orderItemsSharedCollection; trackBy: trackOrderItemById"
+            >
+              {{ orderItemOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.purchaseOrderItem" for="field_purchaseOrderItem"
+            >Purchase Order Item</label
+          >
+          <select
+            class="form-control"
+            id="field_purchaseOrderItem"
+            data-cy="purchaseOrderItem"
+            name="purchaseOrderItem"
+            formControlName="purchaseOrderItem"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                purchaseOrderItemOption.id === editForm.get('purchaseOrderItem')!.value?.id
+                  ? editForm.get('purchaseOrderItem')!.value
+                  : purchaseOrderItemOption
+              "
+              *ngFor="let purchaseOrderItemOption of purchaseOrderItemsSharedCollection; trackBy: trackPurchaseOrderItemById"
+            >
+              {{ purchaseOrderItemOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.product.inventoryTransaction" for="field_inventoryTransaction"
+            >Inventory Transaction</label
+          >
+          <select
+            class="form-control"
+            id="field_inventoryTransaction"
+            data-cy="inventoryTransaction"
+            name="inventoryTransaction"
+            formControlName="inventoryTransaction"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                inventoryTransactionOption.id === editForm.get('inventoryTransaction')!.value?.id
+                  ? editForm.get('inventoryTransaction')!.value
+                  : inventoryTransactionOption
+              "
+              *ngFor="let inventoryTransactionOption of inventoryTransactionsSharedCollection; trackBy: trackInventoryTransactionById"
+            >
+              {{ inventoryTransactionOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

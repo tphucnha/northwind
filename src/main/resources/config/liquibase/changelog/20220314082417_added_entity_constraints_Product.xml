@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Product.
+    -->
+    <changeSet id="20220314082417-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="rel_product__suppliers"
+                                 constraintName="fk_rel_product__suppliers__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="suppliers_id"
+                                 baseTableName="rel_product__suppliers"
+                                 constraintName="fk_rel_product__suppliers__suppliers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="supplier"/>
+
+        <addForeignKeyConstraint baseColumnNames="order_item_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__order_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="purchase_order_item_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__purchase_order_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="purchase_order_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="inventory_transaction_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__inventory_transaction_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inventory_transaction"/>
+    </changeSet>
+</databaseChangeLog>

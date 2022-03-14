@@ -1,0 +1,72 @@
+{
+  "applications": ["Northwind"],
+  "changelogDate": "20220314082415",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "customer_order",
+  "fields": [
+    {
+      "fieldName": "orderDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "shippedDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "shipAddress",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "shippingFee",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "taxes",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "paymentMethod",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paidDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "OrderStatus",
+      "fieldValues": "NEW,INVOICED,SHIPPED,CLOSED"
+    },
+    {
+      "fieldName": "notes",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "CustomerOrder",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "customer",
+      "otherEntityRelationshipName": "order",
+      "relationshipName": "customer",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "orderItem",
+      "otherEntityRelationshipName": "order",
+      "relationshipName": "orderItems",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "inventoryTransaction",
+      "otherEntityRelationshipName": "order",
+      "relationshipName": "inventoryTransaction",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -1,0 +1,159 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName Northwind
+    blueprints []
+    buildTool maven
+    cacheProvider no
+    clientFramework angularX
+    clientPackageManager npm
+    clientTheme none
+    creationTimestamp 1647070464987
+    databaseType sql
+    devDatabaseType h2Disk
+    dtoSuffix DTO
+    enableGradleEnterprise false
+    enableHibernateCache false
+    enableSwaggerCodegen false
+    enableTranslation true
+    gradleEnterpriseHost ""
+    jhiPrefix jhi
+    jhipsterVersion "7.7.0"
+    jwtSecretKey "ZTg4ZjA2ZTY1NjJhODdlNDYwOTVmZGYzMDE5YmRhMTUwOTE5MjQ2YWU0NjI1OGY1NjMwMDY4ZDk3NTFlMTA1MjE0ZDA2YWJkMWRmOWZjYmUyYmFmMDI1ZDBhOTAwODZjNTcwNTFiMGVhNmI3MzJhMWZhNjUwZTI1N2QzYzVjODU="
+    languages [en, vi]
+    messageBroker false
+    nativeLanguage en
+    otherModules []
+    packageName com.tphucnha.northwind
+    prodDatabaseType postgresql
+    reactive false
+    searchEngine false
+    serverPort 8080
+    serviceDiscoveryType false
+    skipUserManagement false
+    testFrameworks []
+    websocket false
+    withAdminUi true
+  }
+
+  entities Category, Customer, InventoryTransaction, CustomerOrder, OrderItem, Product, PurchaseOrder, PurchaseOrderItem, Supplier
+}
+
+entity Category {
+  name String
+  description String
+}
+entity Customer {
+  company String
+  firstName String
+  lastName String
+  address String
+  phone String
+}
+entity InventoryTransaction {
+  transactionType InventoryTransactionType
+  createDate Instant
+  modifiedDate Instant
+  quantity Long
+  comments String
+}
+entity CustomerOrder {
+  orderDate Instant
+  shippedDate Instant
+  shipAddress String
+  shippingFee BigDecimal
+  taxes BigDecimal
+  paymentMethod String
+  paidDate Instant
+  status OrderStatus
+  notes String
+}
+entity OrderItem {
+  quantity Long
+  unitPrice BigDecimal
+  discount Long
+  status OrderItemStatus
+  allocatedDate Instant
+}
+entity Product {
+  code String
+  name String
+  description String
+  standardCost BigDecimal
+  listPrice BigDecimal
+  reorderLevel Integer
+  targetLevel Integer
+  quantityPerUnit Integer
+  disContinued Boolean
+  minimumReorderQuantity Integer
+}
+entity PurchaseOrder {
+  status PurchaseOrderStatus
+  createDate Instant
+  expectedDate Instant
+  paymentDate Instant
+  paymentMethod String
+  paymentAmount BigDecimal
+}
+entity PurchaseOrderItem {
+  quantity Long
+  unitCost BigDecimal
+  receivedDate Instant
+  inventoryPosted Boolean
+}
+entity Supplier {
+  company String
+  firstName String
+  lastName String
+  address String
+  phone String
+}
+enum InventoryTransactionType {
+  PURCHASED,
+  SOLD,
+  ON_HOLD,
+  WASTE
+}
+enum OrderStatus {
+  NEW,
+  INVOICED,
+  SHIPPED,
+  CLOSED
+}
+enum OrderItemStatus {
+  NONE,
+  ALLOCATED,
+  INVOICED,
+  SHIPPED,
+  ON_ORDER,
+  NO_STOCK
+}
+enum PurchaseOrderStatus {
+  NEW,
+  SUBMITTED,
+  APPROVED,
+  CLOSED
+}
+
+relationship OneToMany {
+  CustomerOrder{customer} to Customer{order}
+  InventoryTransaction{order} to CustomerOrder{inventoryTransaction}
+  CustomerOrder{orderItems} to OrderItem{order}
+  OrderItem{product} to Product{orderItem}
+  PurchaseOrderItem{product} to Product{purchaseOrderItem}
+  InventoryTransaction{product} to Product{inventoryTransaction}
+  InventoryTransaction{purchaseOrder} to PurchaseOrder{inventoryTransaction}
+  PurchaseOrder{orderItems} to PurchaseOrderItem{purchaseOrder}
+}
+relationship ManyToOne {
+  Product{category} to Category
+  PurchaseOrder{supplier} to Supplier
+}
+relationship ManyToMany {
+  Product{suppliers} to Supplier{products}
+}
+
+paginate InventoryTransaction, CustomerOrder, PurchaseOrder with infinite-scroll
+paginate Product with pagination
+dto all with mapstruct

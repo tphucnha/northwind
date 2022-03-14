@@ -1,0 +1,11 @@
+{
+  "northwindApp": {
+    "InventoryTransactionType": {
+      "null": "",
+      "PURCHASED": "PURCHASED",
+      "SOLD": "SOLD",
+      "ON_HOLD": "ON_HOLD",
+      "WASTE": "WASTE"
+    }
+  }
+}
