@@ -44,16 +44,12 @@ public class PurchaseOrder implements Serializable {
     private BigDecimal paymentAmount;
 
     @OneToMany(mappedBy = "purchaseOrder")
-    @JsonIgnoreProperties(value = { "products", "purchaseOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "product", "purchaseOrder" }, allowSetters = true)
     private Set<PurchaseOrderItem> orderItems = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
     private Supplier supplier;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "orders", "products", "purchaseOrders" }, allowSetters = true)
-    private InventoryTransaction inventoryTransaction;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -189,19 +185,6 @@ public class PurchaseOrder implements Serializable {
 
     public PurchaseOrder supplier(Supplier supplier) {
         this.setSupplier(supplier);
-        return this;
-    }
-
-    public InventoryTransaction getInventoryTransaction() {
-        return this.inventoryTransaction;
-    }
-
-    public void setInventoryTransaction(InventoryTransaction inventoryTransaction) {
-        this.inventoryTransaction = inventoryTransaction;
-    }
-
-    public PurchaseOrder inventoryTransaction(InventoryTransaction inventoryTransaction) {
-        this.setInventoryTransaction(inventoryTransaction);
         return this;
     }
 

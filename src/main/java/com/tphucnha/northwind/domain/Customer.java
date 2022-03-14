@@ -1,9 +1,6 @@
 package com.tphucnha.northwind.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -35,10 +32,6 @@ public class Customer implements Serializable {
 
     @Column(name = "phone")
     private String phone;
-
-    @OneToMany(mappedBy = "customer")
-    @JsonIgnoreProperties(value = { "orderItems", "customer", "inventoryTransaction" }, allowSetters = true)
-    private Set<CustomerOrder> orders = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -118,37 +111,6 @@ public class Customer implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Set<CustomerOrder> getOrders() {
-        return this.orders;
-    }
-
-    public void setOrders(Set<CustomerOrder> customerOrders) {
-        if (this.orders != null) {
-            this.orders.forEach(i -> i.setCustomer(null));
-        }
-        if (customerOrders != null) {
-            customerOrders.forEach(i -> i.setCustomer(this));
-        }
-        this.orders = customerOrders;
-    }
-
-    public Customer orders(Set<CustomerOrder> customerOrders) {
-        this.setOrders(customerOrders);
-        return this;
-    }
-
-    public Customer addOrders(CustomerOrder customerOrder) {
-        this.orders.add(customerOrder);
-        customerOrder.setCustomer(this);
-        return this;
-    }
-
-    public Customer removeOrders(CustomerOrder customerOrder) {
-        this.orders.remove(customerOrder);
-        customerOrder.setCustomer(null);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -67,26 +67,6 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
-        <dt><span jhiTranslate="northwindApp.product.orderItem">Order Item</span></dt>
-        <dd>
-          <div *ngIf="product.orderItem">
-            <a [routerLink]="['/order-item', product.orderItem?.id, 'view']">{{ product.orderItem?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="northwindApp.product.purchaseOrderItem">Purchase Order Item</span></dt>
-        <dd>
-          <div *ngIf="product.purchaseOrderItem">
-            <a [routerLink]="['/purchase-order-item', product.purchaseOrderItem?.id, 'view']">{{ product.purchaseOrderItem?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="northwindApp.product.inventoryTransaction">Inventory Transaction</span></dt>
-        <dd>
-          <div *ngIf="product.inventoryTransaction">
-            <a [routerLink]="['/inventory-transaction', product.inventoryTransaction?.id, 'view']">{{
-              product.inventoryTransaction?.id
-            }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

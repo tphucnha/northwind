@@ -11,12 +11,6 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ISupplier } from 'app/entities/supplier/supplier.model';
 import { SupplierService } from 'app/entities/supplier/service/supplier.service';
-import { IOrderItem } from 'app/entities/order-item/order-item.model';
-import { OrderItemService } from 'app/entities/order-item/service/order-item.service';
-import { IPurchaseOrderItem } from 'app/entities/purchase-order-item/purchase-order-item.model';
-import { PurchaseOrderItemService } from 'app/entities/purchase-order-item/service/purchase-order-item.service';
-import { IInventoryTransaction } from 'app/entities/inventory-transaction/inventory-transaction.model';
-import { InventoryTransactionService } from 'app/entities/inventory-transaction/service/inventory-transaction.service';
 
 @Component({
   selector: 'jhi-product-update',
@@ -27,9 +21,6 @@ export class ProductUpdateComponent implements OnInit {
 
   categoriesSharedCollection: ICategory[] = [];
   suppliersSharedCollection: ISupplier[] = [];
-  orderItemsSharedCollection: IOrderItem[] = [];
-  purchaseOrderItemsSharedCollection: IPurchaseOrderItem[] = [];
-  inventoryTransactionsSharedCollection: IInventoryTransaction[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -45,18 +36,12 @@ export class ProductUpdateComponent implements OnInit {
     minimumReorderQuantity: [],
     category: [],
     suppliers: [],
-    orderItem: [],
-    purchaseOrderItem: [],
-    inventoryTransaction: [],
   });
 
   constructor(
     protected productService: ProductService,
     protected categoryService: CategoryService,
     protected supplierService: SupplierService,
-    protected orderItemService: OrderItemService,
-    protected purchaseOrderItemService: PurchaseOrderItemService,
-    protected inventoryTransactionService: InventoryTransactionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -88,18 +73,6 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   trackSupplierById(index: number, item: ISupplier): number {
-    return item.id!;
-  }
-
-  trackOrderItemById(index: number, item: IOrderItem): number {
-    return item.id!;
-  }
-
-  trackPurchaseOrderItemById(index: number, item: IPurchaseOrderItem): number {
-    return item.id!;
-  }
-
-  trackInventoryTransactionById(index: number, item: IInventoryTransaction): number {
     return item.id!;
   }
 
@@ -148,9 +121,6 @@ export class ProductUpdateComponent implements OnInit {
       minimumReorderQuantity: product.minimumReorderQuantity,
       category: product.category,
       suppliers: product.suppliers,
-      orderItem: product.orderItem,
-      purchaseOrderItem: product.purchaseOrderItem,
-      inventoryTransaction: product.inventoryTransaction,
     });
 
     this.categoriesSharedCollection = this.categoryService.addCategoryToCollectionIfMissing(
@@ -160,18 +130,6 @@ export class ProductUpdateComponent implements OnInit {
     this.suppliersSharedCollection = this.supplierService.addSupplierToCollectionIfMissing(
       this.suppliersSharedCollection,
       ...(product.suppliers ?? [])
-    );
-    this.orderItemsSharedCollection = this.orderItemService.addOrderItemToCollectionIfMissing(
-      this.orderItemsSharedCollection,
-      product.orderItem
-    );
-    this.purchaseOrderItemsSharedCollection = this.purchaseOrderItemService.addPurchaseOrderItemToCollectionIfMissing(
-      this.purchaseOrderItemsSharedCollection,
-      product.purchaseOrderItem
-    );
-    this.inventoryTransactionsSharedCollection = this.inventoryTransactionService.addInventoryTransactionToCollectionIfMissing(
-      this.inventoryTransactionsSharedCollection,
-      product.inventoryTransaction
     );
   }
 
@@ -195,42 +153,6 @@ export class ProductUpdateComponent implements OnInit {
         )
       )
       .subscribe((suppliers: ISupplier[]) => (this.suppliersSharedCollection = suppliers));
-
-    this.orderItemService
-      .query()
-      .pipe(map((res: HttpResponse<IOrderItem[]>) => res.body ?? []))
-      .pipe(
-        map((orderItems: IOrderItem[]) =>
-          this.orderItemService.addOrderItemToCollectionIfMissing(orderItems, this.editForm.get('orderItem')!.value)
-        )
-      )
-      .subscribe((orderItems: IOrderItem[]) => (this.orderItemsSharedCollection = orderItems));
-
-    this.purchaseOrderItemService
-      .query()
-      .pipe(map((res: HttpResponse<IPurchaseOrderItem[]>) => res.body ?? []))
-      .pipe(
-        map((purchaseOrderItems: IPurchaseOrderItem[]) =>
-          this.purchaseOrderItemService.addPurchaseOrderItemToCollectionIfMissing(
-            purchaseOrderItems,
-            this.editForm.get('purchaseOrderItem')!.value
-          )
-        )
-      )
-      .subscribe((purchaseOrderItems: IPurchaseOrderItem[]) => (this.purchaseOrderItemsSharedCollection = purchaseOrderItems));
-
-    this.inventoryTransactionService
-      .query()
-      .pipe(map((res: HttpResponse<IInventoryTransaction[]>) => res.body ?? []))
-      .pipe(
-        map((inventoryTransactions: IInventoryTransaction[]) =>
-          this.inventoryTransactionService.addInventoryTransactionToCollectionIfMissing(
-            inventoryTransactions,
-            this.editForm.get('inventoryTransaction')!.value
-          )
-        )
-      )
-      .subscribe((inventoryTransactions: IInventoryTransaction[]) => (this.inventoryTransactionsSharedCollection = inventoryTransactions));
   }
 
   protected createFromForm(): IProduct {
@@ -249,9 +171,6 @@ export class ProductUpdateComponent implements OnInit {
       minimumReorderQuantity: this.editForm.get(['minimumReorderQuantity'])!.value,
       category: this.editForm.get(['category'])!.value,
       suppliers: this.editForm.get(['suppliers'])!.value,
-      orderItem: this.editForm.get(['orderItem'])!.value,
-      purchaseOrderItem: this.editForm.get(['purchaseOrderItem'])!.value,
-      inventoryTransaction: this.editForm.get(['inventoryTransaction'])!.value,
     };
   }
 }

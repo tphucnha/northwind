@@ -22,6 +22,8 @@ public class InventoryTransactionDTO implements Serializable {
 
     private String comments;
 
+    private ProductDTO product;
+
     public Long getId() {
         return id;
     }
@@ -70,6 +72,14 @@ public class InventoryTransactionDTO implements Serializable {
         this.comments = comments;
     }
 
+    public ProductDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductDTO product) {
+        this.product = product;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,6 +111,7 @@ public class InventoryTransactionDTO implements Serializable {
             ", modifiedDate='" + getModifiedDate() + "'" +
             ", quantity=" + getQuantity() +
             ", comments='" + getComments() + "'" +
+            ", product=" + getProduct() +
             "}";
     }
 }

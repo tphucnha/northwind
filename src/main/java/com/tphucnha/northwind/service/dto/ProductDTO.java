@@ -37,12 +37,6 @@ public class ProductDTO implements Serializable {
 
     private Set<SupplierDTO> suppliers = new HashSet<>();
 
-    private OrderItemDTO orderItem;
-
-    private PurchaseOrderItemDTO purchaseOrderItem;
-
-    private InventoryTransactionDTO inventoryTransaction;
-
     public Long getId() {
         return id;
     }
@@ -147,30 +141,6 @@ public class ProductDTO implements Serializable {
         this.suppliers = suppliers;
     }
 
-    public OrderItemDTO getOrderItem() {
-        return orderItem;
-    }
-
-    public void setOrderItem(OrderItemDTO orderItem) {
-        this.orderItem = orderItem;
-    }
-
-    public PurchaseOrderItemDTO getPurchaseOrderItem() {
-        return purchaseOrderItem;
-    }
-
-    public void setPurchaseOrderItem(PurchaseOrderItemDTO purchaseOrderItem) {
-        this.purchaseOrderItem = purchaseOrderItem;
-    }
-
-    public InventoryTransactionDTO getInventoryTransaction() {
-        return inventoryTransaction;
-    }
-
-    public void setInventoryTransaction(InventoryTransactionDTO inventoryTransaction) {
-        this.inventoryTransaction = inventoryTransaction;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -209,9 +179,6 @@ public class ProductDTO implements Serializable {
             ", minimumReorderQuantity=" + getMinimumReorderQuantity() +
             ", category=" + getCategory() +
             ", suppliers=" + getSuppliers() +
-            ", orderItem=" + getOrderItem() +
-            ", purchaseOrderItem=" + getPurchaseOrderItem() +
-            ", inventoryTransaction=" + getInventoryTransaction() +
             "}";
     }
 }

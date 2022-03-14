@@ -22,8 +22,7 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "address": "Address",
-      "phone": "Phone",
-      "orders": "Orders"
+      "phone": "Phone"
     }
   }
 }

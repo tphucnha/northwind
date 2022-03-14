@@ -34,6 +34,12 @@
         <dd>
           <span>{{ orderItem.allocatedDate | formatMediumDatetime }}</span>
         </dd>
+        <dt><span jhiTranslate="northwindApp.orderItem.product">Product</span></dt>
+        <dd>
+          <div *ngIf="orderItem.product">
+            <a [routerLink]="['/product', orderItem.product?.id, 'view']">{{ orderItem.product?.id }}</a>
+          </div>
+        </dd>
         <dt><span jhiTranslate="northwindApp.orderItem.order">Order</span></dt>
         <dd>
           <div *ngIf="orderItem.order">

@@ -64,24 +64,6 @@
       "ownerSide": true,
       "relationshipName": "suppliers",
       "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityName": "orderItem",
-      "otherEntityRelationshipName": "product",
-      "relationshipName": "orderItem",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "purchaseOrderItem",
-      "otherEntityRelationshipName": "product",
-      "relationshipName": "purchaseOrderItem",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "inventoryTransaction",
-      "otherEntityRelationshipName": "product",
-      "relationshipName": "inventoryTransaction",
-      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

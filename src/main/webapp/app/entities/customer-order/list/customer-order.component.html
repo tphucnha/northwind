@@ -63,10 +63,6 @@
           <th scope="col" jhiSortBy="customer.id">
             <span jhiTranslate="northwindApp.customerOrder.customer">Customer</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="inventoryTransaction.id">
-            <span jhiTranslate="northwindApp.customerOrder.inventoryTransaction">Inventory Transaction</span>
-            <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -87,13 +83,6 @@
           <td>
             <div *ngIf="customerOrder.customer">
               <a [routerLink]="['/customer', customerOrder.customer?.id, 'view']">{{ customerOrder.customer?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="customerOrder.inventoryTransaction">
-              <a [routerLink]="['/inventory-transaction', customerOrder.inventoryTransaction?.id, 'view']">{{
-                customerOrder.inventoryTransaction?.id
-              }}</a>
             </div>
           </td>
           <td class="text-end">

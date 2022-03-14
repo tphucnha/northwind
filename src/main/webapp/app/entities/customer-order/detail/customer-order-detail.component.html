@@ -56,14 +56,6 @@
             <a [routerLink]="['/customer', customerOrder.customer?.id, 'view']">{{ customerOrder.customer?.id }}</a>
           </div>
         </dd>
-        <dt><span jhiTranslate="northwindApp.customerOrder.inventoryTransaction">Inventory Transaction</span></dt>
-        <dd>
-          <div *ngIf="customerOrder.inventoryTransaction">
-            <a [routerLink]="['/inventory-transaction', customerOrder.inventoryTransaction?.id, 'view']">{{
-              customerOrder.inventoryTransaction?.id
-            }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

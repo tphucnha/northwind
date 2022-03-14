@@ -10,7 +10,7 @@ export interface IOrderItem {
   discount?: number | null;
   status?: OrderItemStatus | null;
   allocatedDate?: dayjs.Dayjs | null;
-  products?: IProduct[] | null;
+  product?: IProduct | null;
   order?: ICustomerOrder | null;
 }
 
@@ -22,7 +22,7 @@ export class OrderItem implements IOrderItem {
     public discount?: number | null,
     public status?: OrderItemStatus | null,
     public allocatedDate?: dayjs.Dayjs | null,
-    public products?: IProduct[] | null,
+    public product?: IProduct | null,
     public order?: ICustomerOrder | null
   ) {}
 }

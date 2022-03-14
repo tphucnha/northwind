@@ -20,6 +20,8 @@ public class PurchaseOrderItemDTO implements Serializable {
 
     private Boolean inventoryPosted;
 
+    private ProductDTO product;
+
     private PurchaseOrderDTO purchaseOrder;
 
     public Long getId() {
@@ -62,6 +64,14 @@ public class PurchaseOrderItemDTO implements Serializable {
         this.inventoryPosted = inventoryPosted;
     }
 
+    public ProductDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductDTO product) {
+        this.product = product;
+    }
+
     public PurchaseOrderDTO getPurchaseOrder() {
         return purchaseOrder;
     }
@@ -100,6 +110,7 @@ public class PurchaseOrderItemDTO implements Serializable {
             ", unitCost=" + getUnitCost() +
             ", receivedDate='" + getReceivedDate() + "'" +
             ", inventoryPosted='" + getInventoryPosted() + "'" +
+            ", product=" + getProduct() +
             ", purchaseOrder=" + getPurchaseOrder() +
             "}";
     }

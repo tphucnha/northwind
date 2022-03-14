@@ -37,6 +37,7 @@
           <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.unitCost">Unit Cost</span></th>
           <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.receivedDate">Received Date</span></th>
           <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.inventoryPosted">Inventory Posted</span></th>
+          <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.product">Product</span></th>
           <th scope="col"><span jhiTranslate="northwindApp.purchaseOrderItem.purchaseOrder">Purchase Order</span></th>
           <th scope="col"></th>
         </tr>
@@ -50,6 +51,11 @@
           <td>{{ purchaseOrderItem.unitCost }}</td>
           <td>{{ purchaseOrderItem.receivedDate | formatMediumDatetime }}</td>
           <td>{{ purchaseOrderItem.inventoryPosted }}</td>
+          <td>
+            <div *ngIf="purchaseOrderItem.product">
+              <a [routerLink]="['/product', purchaseOrderItem.product?.id, 'view']">{{ purchaseOrderItem.product?.id }}</a>
+            </div>
+          </td>
           <td>
             <div *ngIf="purchaseOrderItem.purchaseOrder">
               <a [routerLink]="['/purchase-order', purchaseOrderItem.purchaseOrder?.id, 'view']">{{

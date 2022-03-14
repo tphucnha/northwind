@@ -12,8 +12,6 @@ import { ICustomerOrder, CustomerOrder } from '../customer-order.model';
 import { CustomerOrderService } from '../service/customer-order.service';
 import { ICustomer } from 'app/entities/customer/customer.model';
 import { CustomerService } from 'app/entities/customer/service/customer.service';
-import { IInventoryTransaction } from 'app/entities/inventory-transaction/inventory-transaction.model';
-import { InventoryTransactionService } from 'app/entities/inventory-transaction/service/inventory-transaction.service';
 import { OrderStatus } from 'app/entities/enumerations/order-status.model';
 
 @Component({
@@ -25,7 +23,6 @@ export class CustomerOrderUpdateComponent implements OnInit {
   orderStatusValues = Object.keys(OrderStatus);
 
   customersSharedCollection: ICustomer[] = [];
-  inventoryTransactionsSharedCollection: IInventoryTransaction[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -39,13 +36,11 @@ export class CustomerOrderUpdateComponent implements OnInit {
     status: [],
     notes: [],
     customer: [],
-    inventoryTransaction: [],
   });
 
   constructor(
     protected customerOrderService: CustomerOrderService,
     protected customerService: CustomerService,
-    protected inventoryTransactionService: InventoryTransactionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -83,10 +78,6 @@ export class CustomerOrderUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackInventoryTransactionById(index: number, item: IInventoryTransaction): number {
-    return item.id!;
-  }
-
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICustomerOrder>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -119,16 +110,11 @@ export class CustomerOrderUpdateComponent implements OnInit {
       status: customerOrder.status,
       notes: customerOrder.notes,
       customer: customerOrder.customer,
-      inventoryTransaction: customerOrder.inventoryTransaction,
     });
 
     this.customersSharedCollection = this.customerService.addCustomerToCollectionIfMissing(
       this.customersSharedCollection,
       customerOrder.customer
-    );
-    this.inventoryTransactionsSharedCollection = this.inventoryTransactionService.addInventoryTransactionToCollectionIfMissing(
-      this.inventoryTransactionsSharedCollection,
-      customerOrder.inventoryTransaction
     );
   }
 
@@ -142,19 +128,6 @@ export class CustomerOrderUpdateComponent implements OnInit {
         )
       )
       .subscribe((customers: ICustomer[]) => (this.customersSharedCollection = customers));
-
-    this.inventoryTransactionService
-      .query()
-      .pipe(map((res: HttpResponse<IInventoryTransaction[]>) => res.body ?? []))
-      .pipe(
-        map((inventoryTransactions: IInventoryTransaction[]) =>
-          this.inventoryTransactionService.addInventoryTransactionToCollectionIfMissing(
-            inventoryTransactions,
-            this.editForm.get('inventoryTransaction')!.value
-          )
-        )
-      )
-      .subscribe((inventoryTransactions: IInventoryTransaction[]) => (this.inventoryTransactionsSharedCollection = inventoryTransactions));
   }
 
   protected createFromForm(): ICustomerOrder {
@@ -173,7 +146,6 @@ export class CustomerOrderUpdateComponent implements OnInit {
       status: this.editForm.get(['status'])!.value,
       notes: this.editForm.get(['notes'])!.value,
       customer: this.editForm.get(['customer'])!.value,
-      inventoryTransaction: this.editForm.get(['inventoryTransaction'])!.value,
     };
   }
 }

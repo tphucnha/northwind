@@ -31,13 +31,6 @@
   "name": "Customer",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityName": "customerOrder",
-      "otherEntityRelationshipName": "customer",
-      "relationshipName": "orders",
-      "relationshipType": "one-to-many"
-    }
-  ],
+  "relationships": [],
   "service": "serviceClass"
 }

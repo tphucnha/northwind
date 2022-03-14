@@ -47,15 +47,6 @@
             <column name="category_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="order_item_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="purchase_order_item_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="inventory_transaction_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

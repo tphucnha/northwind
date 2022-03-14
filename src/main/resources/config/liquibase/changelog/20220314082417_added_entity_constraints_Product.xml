@@ -25,23 +25,5 @@
                                  constraintName="fk_rel_product__suppliers__suppliers_id"
                                  referencedColumnNames="id"
                                  referencedTableName="supplier"/>
-
-        <addForeignKeyConstraint baseColumnNames="order_item_id"
-                                 baseTableName="product"
-                                 constraintName="fk_product__order_item_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="order_item"/>
-
-        <addForeignKeyConstraint baseColumnNames="purchase_order_item_id"
-                                 baseTableName="product"
-                                 constraintName="fk_product__purchase_order_item_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="purchase_order_item"/>
-
-        <addForeignKeyConstraint baseColumnNames="inventory_transaction_id"
-                                 baseTableName="product"
-                                 constraintName="fk_product__inventory_transaction_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="inventory_transaction"/>
     </changeSet>
 </databaseChangeLog>

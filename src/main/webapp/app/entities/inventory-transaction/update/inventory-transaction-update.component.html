@@ -76,6 +76,19 @@
           <label class="form-label" jhiTranslate="northwindApp.inventoryTransaction.comments" for="field_comments">Comments</label>
           <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.inventoryTransaction.product" for="field_product">Product</label>
+          <select class="form-control" id="field_product" data-cy="product" name="product" formControlName="product">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="productOption.id === editForm.get('product')!.value?.id ? editForm.get('product')!.value : productOption"
+              *ngFor="let productOption of productsCollection; trackBy: trackProductById"
+            >
+              {{ productOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

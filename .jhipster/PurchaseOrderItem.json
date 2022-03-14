@@ -31,8 +31,9 @@
     {
       "otherEntityName": "product",
       "otherEntityRelationshipName": "purchaseOrderItem",
+      "ownerSide": true,
       "relationshipName": "product",
-      "relationshipType": "one-to-many"
+      "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "purchaseOrder",

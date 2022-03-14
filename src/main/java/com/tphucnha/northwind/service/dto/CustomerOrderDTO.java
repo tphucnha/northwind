@@ -33,8 +33,6 @@ public class CustomerOrderDTO implements Serializable {
 
     private CustomerDTO customer;
 
-    private InventoryTransactionDTO inventoryTransaction;
-
     public Long getId() {
         return id;
     }
@@ -123,14 +121,6 @@ public class CustomerOrderDTO implements Serializable {
         this.customer = customer;
     }
 
-    public InventoryTransactionDTO getInventoryTransaction() {
-        return inventoryTransaction;
-    }
-
-    public void setInventoryTransaction(InventoryTransactionDTO inventoryTransaction) {
-        this.inventoryTransaction = inventoryTransaction;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -167,7 +157,6 @@ public class CustomerOrderDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", notes='" + getNotes() + "'" +
             ", customer=" + getCustomer() +
-            ", inventoryTransaction=" + getInventoryTransaction() +
             "}";
     }
 }

@@ -137,21 +137,24 @@ enum PurchaseOrderStatus {
 }
 
 relationship OneToMany {
-  InventoryTransaction{order} to CustomerOrder{inventoryTransaction}
   CustomerOrder{orderItems} to OrderItem{order}
-  OrderItem{product} to Product{orderItem}
-  PurchaseOrderItem{product} to Product{purchaseOrderItem}
-  InventoryTransaction{product} to Product{inventoryTransaction}
-  InventoryTransaction{purchaseOrder} to PurchaseOrder{inventoryTransaction}
   PurchaseOrder{orderItems} to PurchaseOrderItem{purchaseOrder}
 }
+
 relationship ManyToOne {
   Product{category} to Category
   PurchaseOrder{supplier} to Supplier
-  CustomerOrder{customer} to Customer{orders}
+  CustomerOrder{customer} to Customer
 }
+
 relationship ManyToMany {
   Product{suppliers} to Supplier{products}
+}
+
+relationship OneToOne {
+  OrderItem{product} to Product
+  PurchaseOrderItem{product} to Product
+  InventoryTransaction{product} to Product
 }
 
 paginate InventoryTransaction, CustomerOrder, PurchaseOrder with infinite-scroll

@@ -59,6 +59,19 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.purchaseOrderItem.product" for="field_product">Product</label>
+          <select class="form-control" id="field_product" data-cy="product" name="product" formControlName="product">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="productOption.id === editForm.get('product')!.value?.id ? editForm.get('product')!.value : productOption"
+              *ngFor="let productOption of productsCollection; trackBy: trackProductById"
+            >
+              {{ productOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.purchaseOrderItem.purchaseOrder" for="field_purchaseOrder"
             >Purchase Order</label
           >

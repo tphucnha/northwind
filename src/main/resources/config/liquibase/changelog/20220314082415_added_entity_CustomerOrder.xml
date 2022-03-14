@@ -44,9 +44,6 @@
             <column name="customer_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="inventory_transaction_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="customer_order" columnName="order_date" columnDataType="${datetimeType}"/>

@@ -10,6 +10,8 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IOrderItem, OrderItem } from '../order-item.model';
 import { OrderItemService } from '../service/order-item.service';
+import { IProduct } from 'app/entities/product/product.model';
+import { ProductService } from 'app/entities/product/service/product.service';
 import { ICustomerOrder } from 'app/entities/customer-order/customer-order.model';
 import { CustomerOrderService } from 'app/entities/customer-order/service/customer-order.service';
 import { OrderItemStatus } from 'app/entities/enumerations/order-item-status.model';
@@ -22,6 +24,7 @@ export class OrderItemUpdateComponent implements OnInit {
   isSaving = false;
   orderItemStatusValues = Object.keys(OrderItemStatus);
 
+  productsCollection: IProduct[] = [];
   customerOrdersSharedCollection: ICustomerOrder[] = [];
 
   editForm = this.fb.group({
@@ -31,11 +34,13 @@ export class OrderItemUpdateComponent implements OnInit {
     discount: [],
     status: [],
     allocatedDate: [],
+    product: [],
     order: [],
   });
 
   constructor(
     protected orderItemService: OrderItemService,
+    protected productService: ProductService,
     protected customerOrderService: CustomerOrderService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -66,6 +71,10 @@ export class OrderItemUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.orderItemService.create(orderItem));
     }
+  }
+
+  trackProductById(index: number, item: IProduct): number {
+    return item.id!;
   }
 
   trackCustomerOrderById(index: number, item: ICustomerOrder): number {
@@ -99,9 +108,11 @@ export class OrderItemUpdateComponent implements OnInit {
       discount: orderItem.discount,
       status: orderItem.status,
       allocatedDate: orderItem.allocatedDate ? orderItem.allocatedDate.format(DATE_TIME_FORMAT) : null,
+      product: orderItem.product,
       order: orderItem.order,
     });
 
+    this.productsCollection = this.productService.addProductToCollectionIfMissing(this.productsCollection, orderItem.product);
     this.customerOrdersSharedCollection = this.customerOrderService.addCustomerOrderToCollectionIfMissing(
       this.customerOrdersSharedCollection,
       orderItem.order
@@ -109,6 +120,14 @@ export class OrderItemUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.productService
+      .query({ filter: 'orderitem-is-null' })
+      .pipe(map((res: HttpResponse<IProduct[]>) => res.body ?? []))
+      .pipe(
+        map((products: IProduct[]) => this.productService.addProductToCollectionIfMissing(products, this.editForm.get('product')!.value))
+      )
+      .subscribe((products: IProduct[]) => (this.productsCollection = products));
+
     this.customerOrderService
       .query()
       .pipe(map((res: HttpResponse<ICustomerOrder[]>) => res.body ?? []))
@@ -131,6 +150,7 @@ export class OrderItemUpdateComponent implements OnInit {
       allocatedDate: this.editForm.get(['allocatedDate'])!.value
         ? dayjs(this.editForm.get(['allocatedDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      product: this.editForm.get(['product'])!.value,
       order: this.editForm.get(['order'])!.value,
     };
   }

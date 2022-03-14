@@ -23,6 +23,8 @@ public class OrderItemDTO implements Serializable {
 
     private Instant allocatedDate;
 
+    private ProductDTO product;
+
     private CustomerOrderDTO order;
 
     public Long getId() {
@@ -73,6 +75,14 @@ public class OrderItemDTO implements Serializable {
         this.allocatedDate = allocatedDate;
     }
 
+    public ProductDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductDTO product) {
+        this.product = product;
+    }
+
     public CustomerOrderDTO getOrder() {
         return order;
     }
@@ -112,6 +122,7 @@ public class OrderItemDTO implements Serializable {
             ", discount=" + getDiscount() +
             ", status='" + getStatus() + "'" +
             ", allocatedDate='" + getAllocatedDate() + "'" +
+            ", product=" + getProduct() +
             ", order=" + getOrder() +
             "}";
     }

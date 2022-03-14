@@ -10,8 +10,6 @@ import { CustomerOrderService } from '../service/customer-order.service';
 import { ICustomerOrder, CustomerOrder } from '../customer-order.model';
 import { ICustomer } from 'app/entities/customer/customer.model';
 import { CustomerService } from 'app/entities/customer/service/customer.service';
-import { IInventoryTransaction } from 'app/entities/inventory-transaction/inventory-transaction.model';
-import { InventoryTransactionService } from 'app/entities/inventory-transaction/service/inventory-transaction.service';
 
 import { CustomerOrderUpdateComponent } from './customer-order-update.component';
 
@@ -21,7 +19,6 @@ describe('CustomerOrder Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let customerOrderService: CustomerOrderService;
   let customerService: CustomerService;
-  let inventoryTransactionService: InventoryTransactionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,7 +41,6 @@ describe('CustomerOrder Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     customerOrderService = TestBed.inject(CustomerOrderService);
     customerService = TestBed.inject(CustomerService);
-    inventoryTransactionService = TestBed.inject(InventoryTransactionService);
 
     comp = fixture.componentInstance;
   });
@@ -69,41 +65,16 @@ describe('CustomerOrder Management Update Component', () => {
       expect(comp.customersSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call InventoryTransaction query and add missing value', () => {
-      const customerOrder: ICustomerOrder = { id: 456 };
-      const inventoryTransaction: IInventoryTransaction = { id: 12820 };
-      customerOrder.inventoryTransaction = inventoryTransaction;
-
-      const inventoryTransactionCollection: IInventoryTransaction[] = [{ id: 15837 }];
-      jest.spyOn(inventoryTransactionService, 'query').mockReturnValue(of(new HttpResponse({ body: inventoryTransactionCollection })));
-      const additionalInventoryTransactions = [inventoryTransaction];
-      const expectedCollection: IInventoryTransaction[] = [...additionalInventoryTransactions, ...inventoryTransactionCollection];
-      jest.spyOn(inventoryTransactionService, 'addInventoryTransactionToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ customerOrder });
-      comp.ngOnInit();
-
-      expect(inventoryTransactionService.query).toHaveBeenCalled();
-      expect(inventoryTransactionService.addInventoryTransactionToCollectionIfMissing).toHaveBeenCalledWith(
-        inventoryTransactionCollection,
-        ...additionalInventoryTransactions
-      );
-      expect(comp.inventoryTransactionsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const customerOrder: ICustomerOrder = { id: 456 };
       const customer: ICustomer = { id: 91198 };
       customerOrder.customer = customer;
-      const inventoryTransaction: IInventoryTransaction = { id: 32342 };
-      customerOrder.inventoryTransaction = inventoryTransaction;
 
       activatedRoute.data = of({ customerOrder });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(customerOrder));
       expect(comp.customersSharedCollection).toContain(customer);
-      expect(comp.inventoryTransactionsSharedCollection).toContain(inventoryTransaction);
     });
   });
 
@@ -176,14 +147,6 @@ describe('CustomerOrder Management Update Component', () => {
       it('Should return tracked Customer primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackCustomerById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
-    describe('trackInventoryTransactionById', () => {
-      it('Should return tracked InventoryTransaction primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackInventoryTransactionById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

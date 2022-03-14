@@ -28,8 +28,7 @@
       "status": "Status",
       "notes": "Notes",
       "orderItems": "Order Items",
-      "customer": "Customer",
-      "inventoryTransaction": "Inventory Transaction"
+      "customer": "Customer"
     }
   }
 }

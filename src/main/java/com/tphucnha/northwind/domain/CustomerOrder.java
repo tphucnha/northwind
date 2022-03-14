@@ -53,16 +53,11 @@ public class CustomerOrder implements Serializable {
     private String notes;
 
     @OneToMany(mappedBy = "order")
-    @JsonIgnoreProperties(value = { "products", "order" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "product", "order" }, allowSetters = true)
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "orders" }, allowSetters = true)
     private Customer customer;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "orders", "products", "purchaseOrders" }, allowSetters = true)
-    private InventoryTransaction inventoryTransaction;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -237,19 +232,6 @@ public class CustomerOrder implements Serializable {
 
     public CustomerOrder customer(Customer customer) {
         this.setCustomer(customer);
-        return this;
-    }
-
-    public InventoryTransaction getInventoryTransaction() {
-        return this.inventoryTransaction;
-    }
-
-    public void setInventoryTransaction(InventoryTransaction inventoryTransaction) {
-        this.inventoryTransaction = inventoryTransaction;
-    }
-
-    public CustomerOrder inventoryTransaction(InventoryTransaction inventoryTransaction) {
-        this.setInventoryTransaction(inventoryTransaction);
         return this;
     }
 

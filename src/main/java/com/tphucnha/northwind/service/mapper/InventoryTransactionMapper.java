@@ -7,10 +7,8 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link InventoryTransaction} and its DTO {@link InventoryTransactionDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = { ProductMapper.class })
 public interface InventoryTransactionMapper extends EntityMapper<InventoryTransactionDTO, InventoryTransaction> {
-    @Named("id")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    InventoryTransactionDTO toDtoId(InventoryTransaction inventoryTransaction);
+    @Mapping(target = "product", source = "product", qualifiedByName = "id")
+    InventoryTransactionDTO toDto(InventoryTransaction s);
 }

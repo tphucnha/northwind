@@ -38,6 +38,12 @@
         <dd>
           <span>{{ inventoryTransaction.comments }}</span>
         </dd>
+        <dt><span jhiTranslate="northwindApp.inventoryTransaction.product">Product</span></dt>
+        <dd>
+          <div *ngIf="inventoryTransaction.product">
+            <a [routerLink]="['/product', inventoryTransaction.product?.id, 'view']">{{ inventoryTransaction.product?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

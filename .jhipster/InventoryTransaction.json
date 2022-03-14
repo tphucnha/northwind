@@ -34,22 +34,11 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "customerOrder",
-      "otherEntityRelationshipName": "inventoryTransaction",
-      "relationshipName": "order",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "product",
       "otherEntityRelationshipName": "inventoryTransaction",
+      "ownerSide": true,
       "relationshipName": "product",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "purchaseOrder",
-      "otherEntityRelationshipName": "inventoryTransaction",
-      "relationshipName": "purchaseOrder",
-      "relationshipType": "one-to-many"
+      "relationshipType": "one-to-one"
     }
   ],
   "service": "serviceClass"

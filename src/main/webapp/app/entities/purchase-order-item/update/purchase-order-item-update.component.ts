@@ -10,6 +10,8 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IPurchaseOrderItem, PurchaseOrderItem } from '../purchase-order-item.model';
 import { PurchaseOrderItemService } from '../service/purchase-order-item.service';
+import { IProduct } from 'app/entities/product/product.model';
+import { ProductService } from 'app/entities/product/service/product.service';
 import { IPurchaseOrder } from 'app/entities/purchase-order/purchase-order.model';
 import { PurchaseOrderService } from 'app/entities/purchase-order/service/purchase-order.service';
 
@@ -20,6 +22,7 @@ import { PurchaseOrderService } from 'app/entities/purchase-order/service/purcha
 export class PurchaseOrderItemUpdateComponent implements OnInit {
   isSaving = false;
 
+  productsCollection: IProduct[] = [];
   purchaseOrdersSharedCollection: IPurchaseOrder[] = [];
 
   editForm = this.fb.group({
@@ -28,11 +31,13 @@ export class PurchaseOrderItemUpdateComponent implements OnInit {
     unitCost: [],
     receivedDate: [],
     inventoryPosted: [],
+    product: [],
     purchaseOrder: [],
   });
 
   constructor(
     protected purchaseOrderItemService: PurchaseOrderItemService,
+    protected productService: ProductService,
     protected purchaseOrderService: PurchaseOrderService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -65,6 +70,10 @@ export class PurchaseOrderItemUpdateComponent implements OnInit {
     }
   }
 
+  trackProductById(index: number, item: IProduct): number {
+    return item.id!;
+  }
+
   trackPurchaseOrderById(index: number, item: IPurchaseOrder): number {
     return item.id!;
   }
@@ -95,9 +104,11 @@ export class PurchaseOrderItemUpdateComponent implements OnInit {
       unitCost: purchaseOrderItem.unitCost,
       receivedDate: purchaseOrderItem.receivedDate ? purchaseOrderItem.receivedDate.format(DATE_TIME_FORMAT) : null,
       inventoryPosted: purchaseOrderItem.inventoryPosted,
+      product: purchaseOrderItem.product,
       purchaseOrder: purchaseOrderItem.purchaseOrder,
     });
 
+    this.productsCollection = this.productService.addProductToCollectionIfMissing(this.productsCollection, purchaseOrderItem.product);
     this.purchaseOrdersSharedCollection = this.purchaseOrderService.addPurchaseOrderToCollectionIfMissing(
       this.purchaseOrdersSharedCollection,
       purchaseOrderItem.purchaseOrder
@@ -105,6 +116,14 @@ export class PurchaseOrderItemUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.productService
+      .query({ filter: 'purchaseorderitem-is-null' })
+      .pipe(map((res: HttpResponse<IProduct[]>) => res.body ?? []))
+      .pipe(
+        map((products: IProduct[]) => this.productService.addProductToCollectionIfMissing(products, this.editForm.get('product')!.value))
+      )
+      .subscribe((products: IProduct[]) => (this.productsCollection = products));
+
     this.purchaseOrderService
       .query()
       .pipe(map((res: HttpResponse<IPurchaseOrder[]>) => res.body ?? []))
@@ -126,6 +145,7 @@ export class PurchaseOrderItemUpdateComponent implements OnInit {
         ? dayjs(this.editForm.get(['receivedDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
       inventoryPosted: this.editForm.get(['inventoryPosted'])!.value,
+      product: this.editForm.get(['product'])!.value,
       purchaseOrder: this.editForm.get(['purchaseOrder'])!.value,
     };
   }

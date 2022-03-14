@@ -1,7 +1,6 @@
 import dayjs from 'dayjs/esm';
 import { IPurchaseOrderItem } from 'app/entities/purchase-order-item/purchase-order-item.model';
 import { ISupplier } from 'app/entities/supplier/supplier.model';
-import { IInventoryTransaction } from 'app/entities/inventory-transaction/inventory-transaction.model';
 import { PurchaseOrderStatus } from 'app/entities/enumerations/purchase-order-status.model';
 
 export interface IPurchaseOrder {
@@ -14,7 +13,6 @@ export interface IPurchaseOrder {
   paymentAmount?: number | null;
   orderItems?: IPurchaseOrderItem[] | null;
   supplier?: ISupplier | null;
-  inventoryTransaction?: IInventoryTransaction | null;
 }
 
 export class PurchaseOrder implements IPurchaseOrder {
@@ -27,8 +25,7 @@ export class PurchaseOrder implements IPurchaseOrder {
     public paymentMethod?: string | null,
     public paymentAmount?: number | null,
     public orderItems?: IPurchaseOrderItem[] | null,
-    public supplier?: ISupplier | null,
-    public inventoryTransaction?: IInventoryTransaction | null
+    public supplier?: ISupplier | null
   ) {}
 }
 

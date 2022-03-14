@@ -29,10 +29,7 @@
       "disContinued": "Dis Continued",
       "minimumReorderQuantity": "Minimum Reorder Quantity",
       "category": "Category",
-      "suppliers": "Suppliers",
-      "orderItem": "Order Item",
-      "purchaseOrderItem": "Purchase Order Item",
-      "inventoryTransaction": "Inventory Transaction"
+      "suppliers": "Suppliers"
     }
   }
 }

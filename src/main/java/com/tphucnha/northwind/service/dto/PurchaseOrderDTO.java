@@ -27,8 +27,6 @@ public class PurchaseOrderDTO implements Serializable {
 
     private SupplierDTO supplier;
 
-    private InventoryTransactionDTO inventoryTransaction;
-
     public Long getId() {
         return id;
     }
@@ -93,14 +91,6 @@ public class PurchaseOrderDTO implements Serializable {
         this.supplier = supplier;
     }
 
-    public InventoryTransactionDTO getInventoryTransaction() {
-        return inventoryTransaction;
-    }
-
-    public void setInventoryTransaction(InventoryTransactionDTO inventoryTransaction) {
-        this.inventoryTransaction = inventoryTransaction;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -134,7 +124,6 @@ public class PurchaseOrderDTO implements Serializable {
             ", paymentMethod='" + getPaymentMethod() + "'" +
             ", paymentAmount=" + getPaymentAmount() +
             ", supplier=" + getSupplier() +
-            ", inventoryTransaction=" + getInventoryTransaction() +
             "}";
     }
 }

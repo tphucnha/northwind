@@ -5,8 +5,6 @@ import com.tphucnha.northwind.domain.enumeration.OrderItemStatus;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -40,15 +38,13 @@ public class OrderItem implements Serializable {
     @Column(name = "allocated_date")
     private Instant allocatedDate;
 
-    @OneToMany(mappedBy = "orderItem")
-    @JsonIgnoreProperties(
-        value = { "category", "suppliers", "orderItem", "purchaseOrderItem", "inventoryTransaction" },
-        allowSetters = true
-    )
-    private Set<Product> products = new HashSet<>();
+    @JsonIgnoreProperties(value = { "category", "suppliers" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Product product;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "orderItems", "customer", "inventoryTransaction" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "orderItems", "customer" }, allowSetters = true)
     private CustomerOrder order;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -131,34 +127,16 @@ public class OrderItem implements Serializable {
         this.allocatedDate = allocatedDate;
     }
 
-    public Set<Product> getProducts() {
-        return this.products;
+    public Product getProduct() {
+        return this.product;
     }
 
-    public void setProducts(Set<Product> products) {
-        if (this.products != null) {
-            this.products.forEach(i -> i.setOrderItem(null));
-        }
-        if (products != null) {
-            products.forEach(i -> i.setOrderItem(this));
-        }
-        this.products = products;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public OrderItem products(Set<Product> products) {
-        this.setProducts(products);
-        return this;
-    }
-
-    public OrderItem addProduct(Product product) {
-        this.products.add(product);
-        product.setOrderItem(this);
-        return this;
-    }
-
-    public OrderItem removeProduct(Product product) {
-        this.products.remove(product);
-        product.setOrderItem(null);
+    public OrderItem product(Product product) {
+        this.setProduct(product);
         return this;
     }
 

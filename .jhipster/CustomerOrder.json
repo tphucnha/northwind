@@ -57,14 +57,8 @@
     },
     {
       "otherEntityName": "customer",
-      "otherEntityRelationshipName": "orders",
+      "otherEntityRelationshipName": "customerOrder",
       "relationshipName": "customer",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "inventoryTransaction",
-      "otherEntityRelationshipName": "order",
-      "relationshipName": "inventoryTransaction",
       "relationshipType": "many-to-one"
     }
   ],

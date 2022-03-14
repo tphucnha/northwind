@@ -29,6 +29,9 @@
             <column name="allocated_date" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_order_item__product_id" />
+            </column>
             <column name="order_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -64,18 +64,6 @@ public class Product implements Serializable {
     @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
     private Set<Supplier> suppliers = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "products", "order" }, allowSetters = true)
-    private OrderItem orderItem;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "products", "purchaseOrder" }, allowSetters = true)
-    private PurchaseOrderItem purchaseOrderItem;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "orders", "products", "purchaseOrders" }, allowSetters = true)
-    private InventoryTransaction inventoryTransaction;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -256,45 +244,6 @@ public class Product implements Serializable {
     public Product removeSuppliers(Supplier supplier) {
         this.suppliers.remove(supplier);
         supplier.getProducts().remove(this);
-        return this;
-    }
-
-    public OrderItem getOrderItem() {
-        return this.orderItem;
-    }
-
-    public void setOrderItem(OrderItem orderItem) {
-        this.orderItem = orderItem;
-    }
-
-    public Product orderItem(OrderItem orderItem) {
-        this.setOrderItem(orderItem);
-        return this;
-    }
-
-    public PurchaseOrderItem getPurchaseOrderItem() {
-        return this.purchaseOrderItem;
-    }
-
-    public void setPurchaseOrderItem(PurchaseOrderItem purchaseOrderItem) {
-        this.purchaseOrderItem = purchaseOrderItem;
-    }
-
-    public Product purchaseOrderItem(PurchaseOrderItem purchaseOrderItem) {
-        this.setPurchaseOrderItem(purchaseOrderItem);
-        return this;
-    }
-
-    public InventoryTransaction getInventoryTransaction() {
-        return this.inventoryTransaction;
-    }
-
-    public void setInventoryTransaction(InventoryTransaction inventoryTransaction) {
-        this.inventoryTransaction = inventoryTransaction;
-    }
-
-    public Product inventoryTransaction(InventoryTransaction inventoryTransaction) {
-        this.setInventoryTransaction(inventoryTransaction);
         return this;
     }
 

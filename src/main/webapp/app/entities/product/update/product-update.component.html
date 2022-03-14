@@ -140,69 +140,6 @@
             </option>
           </select>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="northwindApp.product.orderItem" for="field_orderItem">Order Item</label>
-          <select class="form-control" id="field_orderItem" data-cy="orderItem" name="orderItem" formControlName="orderItem">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="orderItemOption.id === editForm.get('orderItem')!.value?.id ? editForm.get('orderItem')!.value : orderItemOption"
-              *ngFor="let orderItemOption of orderItemsSharedCollection; trackBy: trackOrderItemById"
-            >
-              {{ orderItemOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="northwindApp.product.purchaseOrderItem" for="field_purchaseOrderItem"
-            >Purchase Order Item</label
-          >
-          <select
-            class="form-control"
-            id="field_purchaseOrderItem"
-            data-cy="purchaseOrderItem"
-            name="purchaseOrderItem"
-            formControlName="purchaseOrderItem"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                purchaseOrderItemOption.id === editForm.get('purchaseOrderItem')!.value?.id
-                  ? editForm.get('purchaseOrderItem')!.value
-                  : purchaseOrderItemOption
-              "
-              *ngFor="let purchaseOrderItemOption of purchaseOrderItemsSharedCollection; trackBy: trackPurchaseOrderItemById"
-            >
-              {{ purchaseOrderItemOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="northwindApp.product.inventoryTransaction" for="field_inventoryTransaction"
-            >Inventory Transaction</label
-          >
-          <select
-            class="form-control"
-            id="field_inventoryTransaction"
-            data-cy="inventoryTransaction"
-            name="inventoryTransaction"
-            formControlName="inventoryTransaction"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                inventoryTransactionOption.id === editForm.get('inventoryTransaction')!.value?.id
-                  ? editForm.get('inventoryTransaction')!.value
-                  : inventoryTransactionOption
-              "
-              *ngFor="let inventoryTransactionOption of inventoryTransactionsSharedCollection; trackBy: trackInventoryTransactionById"
-            >
-              {{ inventoryTransactionOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

@@ -8,6 +8,8 @@ import { of, Subject, from } from 'rxjs';
 
 import { OrderItemService } from '../service/order-item.service';
 import { IOrderItem, OrderItem } from '../order-item.model';
+import { IProduct } from 'app/entities/product/product.model';
+import { ProductService } from 'app/entities/product/service/product.service';
 import { ICustomerOrder } from 'app/entities/customer-order/customer-order.model';
 import { CustomerOrderService } from 'app/entities/customer-order/service/customer-order.service';
 
@@ -18,6 +20,7 @@ describe('OrderItem Management Update Component', () => {
   let fixture: ComponentFixture<OrderItemUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let orderItemService: OrderItemService;
+  let productService: ProductService;
   let customerOrderService: CustomerOrderService;
 
   beforeEach(() => {
@@ -40,12 +43,31 @@ describe('OrderItem Management Update Component', () => {
     fixture = TestBed.createComponent(OrderItemUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     orderItemService = TestBed.inject(OrderItemService);
+    productService = TestBed.inject(ProductService);
     customerOrderService = TestBed.inject(CustomerOrderService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call product query and add missing value', () => {
+      const orderItem: IOrderItem = { id: 456 };
+      const product: IProduct = { id: 84737 };
+      orderItem.product = product;
+
+      const productCollection: IProduct[] = [{ id: 25918 }];
+      jest.spyOn(productService, 'query').mockReturnValue(of(new HttpResponse({ body: productCollection })));
+      const expectedCollection: IProduct[] = [product, ...productCollection];
+      jest.spyOn(productService, 'addProductToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ orderItem });
+      comp.ngOnInit();
+
+      expect(productService.query).toHaveBeenCalled();
+      expect(productService.addProductToCollectionIfMissing).toHaveBeenCalledWith(productCollection, product);
+      expect(comp.productsCollection).toEqual(expectedCollection);
+    });
+
     it('Should call CustomerOrder query and add missing value', () => {
       const orderItem: IOrderItem = { id: 456 };
       const order: ICustomerOrder = { id: 19893 };
@@ -70,6 +92,8 @@ describe('OrderItem Management Update Component', () => {
 
     it('Should update editForm', () => {
       const orderItem: IOrderItem = { id: 456 };
+      const product: IProduct = { id: 72954 };
+      orderItem.product = product;
       const order: ICustomerOrder = { id: 61027 };
       orderItem.order = order;
 
@@ -77,6 +101,7 @@ describe('OrderItem Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(orderItem));
+      expect(comp.productsCollection).toContain(product);
       expect(comp.customerOrdersSharedCollection).toContain(order);
     });
   });
@@ -146,6 +171,14 @@ describe('OrderItem Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
+    describe('trackProductById', () => {
+      it('Should return tracked Product primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackProductById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
     describe('trackCustomerOrderById', () => {
       it('Should return tracked CustomerOrder primary key', () => {
         const entity = { id: 123 };

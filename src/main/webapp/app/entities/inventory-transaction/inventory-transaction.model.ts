@@ -1,7 +1,5 @@
 import dayjs from 'dayjs/esm';
-import { ICustomerOrder } from 'app/entities/customer-order/customer-order.model';
 import { IProduct } from 'app/entities/product/product.model';
-import { IPurchaseOrder } from 'app/entities/purchase-order/purchase-order.model';
 import { InventoryTransactionType } from 'app/entities/enumerations/inventory-transaction-type.model';
 
 export interface IInventoryTransaction {
@@ -11,9 +9,7 @@ export interface IInventoryTransaction {
   modifiedDate?: dayjs.Dayjs | null;
   quantity?: number | null;
   comments?: string | null;
-  orders?: ICustomerOrder[] | null;
-  products?: IProduct[] | null;
-  purchaseOrders?: IPurchaseOrder[] | null;
+  product?: IProduct | null;
 }
 
 export class InventoryTransaction implements IInventoryTransaction {
@@ -24,9 +20,7 @@ export class InventoryTransaction implements IInventoryTransaction {
     public modifiedDate?: dayjs.Dayjs | null,
     public quantity?: number | null,
     public comments?: string | null,
-    public orders?: ICustomerOrder[] | null,
-    public products?: IProduct[] | null,
-    public purchaseOrders?: IPurchaseOrder[] | null
+    public product?: IProduct | null
   ) {}
 }
 

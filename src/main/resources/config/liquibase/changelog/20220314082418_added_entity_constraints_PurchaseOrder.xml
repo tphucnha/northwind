@@ -13,11 +13,5 @@
                                  constraintName="fk_purchase_order__supplier_id"
                                  referencedColumnNames="id"
                                  referencedTableName="supplier"/>
-
-        <addForeignKeyConstraint baseColumnNames="inventory_transaction_id"
-                                 baseTableName="purchase_order"
-                                 constraintName="fk_purchase_order__inventory_transaction_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="inventory_transaction"/>
     </changeSet>
 </databaseChangeLog>

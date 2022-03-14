@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tphucnha.northwind.domain.enumeration.InventoryTransactionType;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -39,20 +37,10 @@ public class InventoryTransaction implements Serializable {
     @Column(name = "comments")
     private String comments;
 
-    @OneToMany(mappedBy = "inventoryTransaction")
-    @JsonIgnoreProperties(value = { "orderItems", "customer", "inventoryTransaction" }, allowSetters = true)
-    private Set<CustomerOrder> orders = new HashSet<>();
-
-    @OneToMany(mappedBy = "inventoryTransaction")
-    @JsonIgnoreProperties(
-        value = { "category", "suppliers", "orderItem", "purchaseOrderItem", "inventoryTransaction" },
-        allowSetters = true
-    )
-    private Set<Product> products = new HashSet<>();
-
-    @OneToMany(mappedBy = "inventoryTransaction")
-    @JsonIgnoreProperties(value = { "orderItems", "supplier", "inventoryTransaction" }, allowSetters = true)
-    private Set<PurchaseOrder> purchaseOrders = new HashSet<>();
+    @JsonIgnoreProperties(value = { "category", "suppliers" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Product product;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -134,96 +122,16 @@ public class InventoryTransaction implements Serializable {
         this.comments = comments;
     }
 
-    public Set<CustomerOrder> getOrders() {
-        return this.orders;
+    public Product getProduct() {
+        return this.product;
     }
 
-    public void setOrders(Set<CustomerOrder> customerOrders) {
-        if (this.orders != null) {
-            this.orders.forEach(i -> i.setInventoryTransaction(null));
-        }
-        if (customerOrders != null) {
-            customerOrders.forEach(i -> i.setInventoryTransaction(this));
-        }
-        this.orders = customerOrders;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public InventoryTransaction orders(Set<CustomerOrder> customerOrders) {
-        this.setOrders(customerOrders);
-        return this;
-    }
-
-    public InventoryTransaction addOrder(CustomerOrder customerOrder) {
-        this.orders.add(customerOrder);
-        customerOrder.setInventoryTransaction(this);
-        return this;
-    }
-
-    public InventoryTransaction removeOrder(CustomerOrder customerOrder) {
-        this.orders.remove(customerOrder);
-        customerOrder.setInventoryTransaction(null);
-        return this;
-    }
-
-    public Set<Product> getProducts() {
-        return this.products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        if (this.products != null) {
-            this.products.forEach(i -> i.setInventoryTransaction(null));
-        }
-        if (products != null) {
-            products.forEach(i -> i.setInventoryTransaction(this));
-        }
-        this.products = products;
-    }
-
-    public InventoryTransaction products(Set<Product> products) {
-        this.setProducts(products);
-        return this;
-    }
-
-    public InventoryTransaction addProduct(Product product) {
-        this.products.add(product);
-        product.setInventoryTransaction(this);
-        return this;
-    }
-
-    public InventoryTransaction removeProduct(Product product) {
-        this.products.remove(product);
-        product.setInventoryTransaction(null);
-        return this;
-    }
-
-    public Set<PurchaseOrder> getPurchaseOrders() {
-        return this.purchaseOrders;
-    }
-
-    public void setPurchaseOrders(Set<PurchaseOrder> purchaseOrders) {
-        if (this.purchaseOrders != null) {
-            this.purchaseOrders.forEach(i -> i.setInventoryTransaction(null));
-        }
-        if (purchaseOrders != null) {
-            purchaseOrders.forEach(i -> i.setInventoryTransaction(this));
-        }
-        this.purchaseOrders = purchaseOrders;
-    }
-
-    public InventoryTransaction purchaseOrders(Set<PurchaseOrder> purchaseOrders) {
-        this.setPurchaseOrders(purchaseOrders);
-        return this;
-    }
-
-    public InventoryTransaction addPurchaseOrder(PurchaseOrder purchaseOrder) {
-        this.purchaseOrders.add(purchaseOrder);
-        purchaseOrder.setInventoryTransaction(this);
-        return this;
-    }
-
-    public InventoryTransaction removePurchaseOrder(PurchaseOrder purchaseOrder) {
-        this.purchaseOrders.remove(purchaseOrder);
-        purchaseOrder.setInventoryTransaction(null);
+    public InventoryTransaction product(Product product) {
+        this.setProduct(product);
         return this;
     }
 

@@ -48,12 +48,6 @@
       "otherEntityRelationshipName": "purchaseOrder",
       "relationshipName": "supplier",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "inventoryTransaction",
-      "otherEntityRelationshipName": "purchaseOrder",
-      "relationshipName": "inventoryTransaction",
-      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

@@ -12,8 +12,6 @@ import { IPurchaseOrder, PurchaseOrder } from '../purchase-order.model';
 import { PurchaseOrderService } from '../service/purchase-order.service';
 import { ISupplier } from 'app/entities/supplier/supplier.model';
 import { SupplierService } from 'app/entities/supplier/service/supplier.service';
-import { IInventoryTransaction } from 'app/entities/inventory-transaction/inventory-transaction.model';
-import { InventoryTransactionService } from 'app/entities/inventory-transaction/service/inventory-transaction.service';
 import { PurchaseOrderStatus } from 'app/entities/enumerations/purchase-order-status.model';
 
 @Component({
@@ -25,7 +23,6 @@ export class PurchaseOrderUpdateComponent implements OnInit {
   purchaseOrderStatusValues = Object.keys(PurchaseOrderStatus);
 
   suppliersSharedCollection: ISupplier[] = [];
-  inventoryTransactionsSharedCollection: IInventoryTransaction[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -36,13 +33,11 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     paymentMethod: [],
     paymentAmount: [],
     supplier: [],
-    inventoryTransaction: [],
   });
 
   constructor(
     protected purchaseOrderService: PurchaseOrderService,
     protected supplierService: SupplierService,
-    protected inventoryTransactionService: InventoryTransactionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -80,10 +75,6 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackInventoryTransactionById(index: number, item: IInventoryTransaction): number {
-    return item.id!;
-  }
-
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPurchaseOrder>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -113,16 +104,11 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       paymentMethod: purchaseOrder.paymentMethod,
       paymentAmount: purchaseOrder.paymentAmount,
       supplier: purchaseOrder.supplier,
-      inventoryTransaction: purchaseOrder.inventoryTransaction,
     });
 
     this.suppliersSharedCollection = this.supplierService.addSupplierToCollectionIfMissing(
       this.suppliersSharedCollection,
       purchaseOrder.supplier
-    );
-    this.inventoryTransactionsSharedCollection = this.inventoryTransactionService.addInventoryTransactionToCollectionIfMissing(
-      this.inventoryTransactionsSharedCollection,
-      purchaseOrder.inventoryTransaction
     );
   }
 
@@ -136,19 +122,6 @@ export class PurchaseOrderUpdateComponent implements OnInit {
         )
       )
       .subscribe((suppliers: ISupplier[]) => (this.suppliersSharedCollection = suppliers));
-
-    this.inventoryTransactionService
-      .query()
-      .pipe(map((res: HttpResponse<IInventoryTransaction[]>) => res.body ?? []))
-      .pipe(
-        map((inventoryTransactions: IInventoryTransaction[]) =>
-          this.inventoryTransactionService.addInventoryTransactionToCollectionIfMissing(
-            inventoryTransactions,
-            this.editForm.get('inventoryTransaction')!.value
-          )
-        )
-      )
-      .subscribe((inventoryTransactions: IInventoryTransaction[]) => (this.inventoryTransactionsSharedCollection = inventoryTransactions));
   }
 
   protected createFromForm(): IPurchaseOrder {
@@ -166,7 +139,6 @@ export class PurchaseOrderUpdateComponent implements OnInit {
       paymentMethod: this.editForm.get(['paymentMethod'])!.value,
       paymentAmount: this.editForm.get(['paymentAmount'])!.value,
       supplier: this.editForm.get(['supplier'])!.value,
-      inventoryTransaction: this.editForm.get(['inventoryTransaction'])!.value,
     };
   }
 }

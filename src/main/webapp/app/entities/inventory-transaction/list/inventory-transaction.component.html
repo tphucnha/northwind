@@ -48,6 +48,9 @@
           <th scope="col" jhiSortBy="comments">
             <span jhiTranslate="northwindApp.inventoryTransaction.comments">Comments</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="product.id">
+            <span jhiTranslate="northwindApp.inventoryTransaction.product">Product</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -63,6 +66,11 @@
           <td>{{ inventoryTransaction.modifiedDate | formatMediumDatetime }}</td>
           <td>{{ inventoryTransaction.quantity }}</td>
           <td>{{ inventoryTransaction.comments }}</td>
+          <td>
+            <div *ngIf="inventoryTransaction.product">
+              <a [routerLink]="['/product', inventoryTransaction.product?.id, 'view']">{{ inventoryTransaction.product?.id }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

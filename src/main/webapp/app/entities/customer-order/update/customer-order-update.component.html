@@ -130,31 +130,6 @@
             </option>
           </select>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="northwindApp.customerOrder.inventoryTransaction" for="field_inventoryTransaction"
-            >Inventory Transaction</label
-          >
-          <select
-            class="form-control"
-            id="field_inventoryTransaction"
-            data-cy="inventoryTransaction"
-            name="inventoryTransaction"
-            formControlName="inventoryTransaction"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                inventoryTransactionOption.id === editForm.get('inventoryTransaction')!.value?.id
-                  ? editForm.get('inventoryTransaction')!.value
-                  : inventoryTransactionOption
-              "
-              *ngFor="let inventoryTransactionOption of inventoryTransactionsSharedCollection; trackBy: trackInventoryTransactionById"
-            >
-              {{ inventoryTransactionOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

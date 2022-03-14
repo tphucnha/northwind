@@ -1,5 +1,3 @@
-import { ICustomerOrder } from 'app/entities/customer-order/customer-order.model';
-
 export interface ICustomer {
   id?: number;
   company?: string | null;
@@ -7,7 +5,6 @@ export interface ICustomer {
   lastName?: string | null;
   address?: string | null;
   phone?: string | null;
-  orders?: ICustomerOrder[] | null;
 }
 
 export class Customer implements ICustomer {
@@ -17,8 +14,7 @@ export class Customer implements ICustomer {
     public firstName?: string | null,
     public lastName?: string | null,
     public address?: string | null,
-    public phone?: string | null,
-    public orders?: ICustomerOrder[] | null
+    public phone?: string | null
   ) {}
 }
 

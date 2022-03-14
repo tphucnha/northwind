@@ -3,13 +3,15 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import dayjs from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IInventoryTransaction, InventoryTransaction } from '../inventory-transaction.model';
 import { InventoryTransactionService } from '../service/inventory-transaction.service';
+import { IProduct } from 'app/entities/product/product.model';
+import { ProductService } from 'app/entities/product/service/product.service';
 import { InventoryTransactionType } from 'app/entities/enumerations/inventory-transaction-type.model';
 
 @Component({
@@ -20,6 +22,8 @@ export class InventoryTransactionUpdateComponent implements OnInit {
   isSaving = false;
   inventoryTransactionTypeValues = Object.keys(InventoryTransactionType);
 
+  productsCollection: IProduct[] = [];
+
   editForm = this.fb.group({
     id: [],
     transactionType: [],
@@ -27,10 +31,12 @@ export class InventoryTransactionUpdateComponent implements OnInit {
     modifiedDate: [],
     quantity: [],
     comments: [],
+    product: [],
   });
 
   constructor(
     protected inventoryTransactionService: InventoryTransactionService,
+    protected productService: ProductService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -44,6 +50,8 @@ export class InventoryTransactionUpdateComponent implements OnInit {
       }
 
       this.updateForm(inventoryTransaction);
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -59,6 +67,10 @@ export class InventoryTransactionUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.inventoryTransactionService.create(inventoryTransaction));
     }
+  }
+
+  trackProductById(index: number, item: IProduct): number {
+    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInventoryTransaction>>): void {
@@ -88,7 +100,20 @@ export class InventoryTransactionUpdateComponent implements OnInit {
       modifiedDate: inventoryTransaction.modifiedDate ? inventoryTransaction.modifiedDate.format(DATE_TIME_FORMAT) : null,
       quantity: inventoryTransaction.quantity,
       comments: inventoryTransaction.comments,
+      product: inventoryTransaction.product,
     });
+
+    this.productsCollection = this.productService.addProductToCollectionIfMissing(this.productsCollection, inventoryTransaction.product);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.productService
+      .query({ filter: 'inventorytransaction-is-null' })
+      .pipe(map((res: HttpResponse<IProduct[]>) => res.body ?? []))
+      .pipe(
+        map((products: IProduct[]) => this.productService.addProductToCollectionIfMissing(products, this.editForm.get('product')!.value))
+      )
+      .subscribe((products: IProduct[]) => (this.productsCollection = products));
   }
 
   protected createFromForm(): IInventoryTransaction {
@@ -102,6 +127,7 @@ export class InventoryTransactionUpdateComponent implements OnInit {
         : undefined,
       quantity: this.editForm.get(['quantity'])!.value,
       comments: this.editForm.get(['comments'])!.value,
+      product: this.editForm.get(['product'])!.value,
     };
   }
 }

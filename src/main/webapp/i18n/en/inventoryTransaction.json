@@ -23,9 +23,7 @@
       "modifiedDate": "Modified Date",
       "quantity": "Quantity",
       "comments": "Comments",
-      "order": "Order",
-      "product": "Product",
-      "purchaseOrder": "Purchase Order"
+      "product": "Product"
     }
   }
 }

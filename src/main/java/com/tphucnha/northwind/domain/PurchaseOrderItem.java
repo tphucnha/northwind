@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -35,15 +33,13 @@ public class PurchaseOrderItem implements Serializable {
     @Column(name = "inventory_posted")
     private Boolean inventoryPosted;
 
-    @OneToMany(mappedBy = "purchaseOrderItem")
-    @JsonIgnoreProperties(
-        value = { "category", "suppliers", "orderItem", "purchaseOrderItem", "inventoryTransaction" },
-        allowSetters = true
-    )
-    private Set<Product> products = new HashSet<>();
+    @JsonIgnoreProperties(value = { "category", "suppliers" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Product product;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "orderItems", "supplier", "inventoryTransaction" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "orderItems", "supplier" }, allowSetters = true)
     private PurchaseOrder purchaseOrder;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -113,34 +109,16 @@ public class PurchaseOrderItem implements Serializable {
         this.inventoryPosted = inventoryPosted;
     }
 
-    public Set<Product> getProducts() {
-        return this.products;
+    public Product getProduct() {
+        return this.product;
     }
 
-    public void setProducts(Set<Product> products) {
-        if (this.products != null) {
-            this.products.forEach(i -> i.setPurchaseOrderItem(null));
-        }
-        if (products != null) {
-            products.forEach(i -> i.setPurchaseOrderItem(this));
-        }
-        this.products = products;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public PurchaseOrderItem products(Set<Product> products) {
-        this.setProducts(products);
-        return this;
-    }
-
-    public PurchaseOrderItem addProduct(Product product) {
-        this.products.add(product);
-        product.setPurchaseOrderItem(this);
-        return this;
-    }
-
-    public PurchaseOrderItem removeProduct(Product product) {
-        this.products.remove(product);
-        product.setPurchaseOrderItem(null);
+    public PurchaseOrderItem product(Product product) {
+        this.setProduct(product);
         return this;
     }
 

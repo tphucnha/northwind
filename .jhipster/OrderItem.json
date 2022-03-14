@@ -36,8 +36,9 @@
     {
       "otherEntityName": "product",
       "otherEntityRelationshipName": "orderItem",
+      "ownerSide": true,
       "relationshipName": "product",
-      "relationshipType": "one-to-many"
+      "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "customerOrder",

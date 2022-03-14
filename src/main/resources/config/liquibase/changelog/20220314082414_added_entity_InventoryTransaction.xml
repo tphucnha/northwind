@@ -29,6 +29,9 @@
             <column name="comments" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_inventory_transaction__product_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="inventory_transaction" columnName="create_date" columnDataType="${datetimeType}"/>

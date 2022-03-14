@@ -8,7 +8,7 @@ export interface IPurchaseOrderItem {
   unitCost?: number | null;
   receivedDate?: dayjs.Dayjs | null;
   inventoryPosted?: boolean | null;
-  products?: IProduct[] | null;
+  product?: IProduct | null;
   purchaseOrder?: IPurchaseOrder | null;
 }
 
@@ -19,7 +19,7 @@ export class PurchaseOrderItem implements IPurchaseOrderItem {
     public unitCost?: number | null,
     public receivedDate?: dayjs.Dayjs | null,
     public inventoryPosted?: boolean | null,
-    public products?: IProduct[] | null,
+    public product?: IProduct | null,
     public purchaseOrder?: IPurchaseOrder | null
   ) {
     this.inventoryPosted = this.inventoryPosted ?? false;
