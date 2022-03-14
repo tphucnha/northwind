@@ -15,7 +15,7 @@ export interface ICustomerOrder {
   status?: OrderStatus | null;
   notes?: string | null;
   orderItems?: IOrderItem[] | null;
-  customer?: ICustomer | null;
+  customer?: ICustomer;
 }
 
 export class CustomerOrder implements ICustomerOrder {
@@ -31,7 +31,7 @@ export class CustomerOrder implements ICustomerOrder {
     public status?: OrderStatus | null,
     public notes?: string | null,
     public orderItems?: IOrderItem[] | null,
-    public customer?: ICustomer | null
+    public customer?: ICustomer
   ) {}
 }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class PurchaseOrderUpdateComponent implements OnInit {
     paymentDate: [],
     paymentMethod: [],
     paymentAmount: [],
-    supplier: [],
+    supplier: [null, Validators.required],
   });
 
   constructor(

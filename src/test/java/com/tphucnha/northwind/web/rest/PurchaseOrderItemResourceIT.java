@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.tphucnha.northwind.IntegrationTest;
+import com.tphucnha.northwind.domain.Product;
+import com.tphucnha.northwind.domain.PurchaseOrder;
 import com.tphucnha.northwind.domain.PurchaseOrderItem;
 import com.tphucnha.northwind.repository.PurchaseOrderItemRepository;
 import com.tphucnha.northwind.service.dto.PurchaseOrderItemDTO;
@@ -79,6 +81,26 @@ class PurchaseOrderItemResourceIT {
             .unitCost(DEFAULT_UNIT_COST)
             .receivedDate(DEFAULT_RECEIVED_DATE)
             .inventoryPosted(DEFAULT_INVENTORY_POSTED);
+        // Add required entity
+        Product product;
+        if (TestUtil.findAll(em, Product.class).isEmpty()) {
+            product = ProductResourceIT.createEntity(em);
+            em.persist(product);
+            em.flush();
+        } else {
+            product = TestUtil.findAll(em, Product.class).get(0);
+        }
+        purchaseOrderItem.setProduct(product);
+        // Add required entity
+        PurchaseOrder purchaseOrder;
+        if (TestUtil.findAll(em, PurchaseOrder.class).isEmpty()) {
+            purchaseOrder = PurchaseOrderResourceIT.createEntity(em);
+            em.persist(purchaseOrder);
+            em.flush();
+        } else {
+            purchaseOrder = TestUtil.findAll(em, PurchaseOrder.class).get(0);
+        }
+        purchaseOrderItem.setPurchaseOrder(purchaseOrder);
         return purchaseOrderItem;
     }
 
@@ -94,6 +116,26 @@ class PurchaseOrderItemResourceIT {
             .unitCost(UPDATED_UNIT_COST)
             .receivedDate(UPDATED_RECEIVED_DATE)
             .inventoryPosted(UPDATED_INVENTORY_POSTED);
+        // Add required entity
+        Product product;
+        if (TestUtil.findAll(em, Product.class).isEmpty()) {
+            product = ProductResourceIT.createUpdatedEntity(em);
+            em.persist(product);
+            em.flush();
+        } else {
+            product = TestUtil.findAll(em, Product.class).get(0);
+        }
+        purchaseOrderItem.setProduct(product);
+        // Add required entity
+        PurchaseOrder purchaseOrder;
+        if (TestUtil.findAll(em, PurchaseOrder.class).isEmpty()) {
+            purchaseOrder = PurchaseOrderResourceIT.createUpdatedEntity(em);
+            em.persist(purchaseOrder);
+            em.flush();
+        } else {
+            purchaseOrder = TestUtil.findAll(em, PurchaseOrder.class).get(0);
+        }
+        purchaseOrderItem.setPurchaseOrder(purchaseOrder);
         return purchaseOrderItem;
     }
 

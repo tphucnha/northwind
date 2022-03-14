@@ -61,7 +61,7 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.purchaseOrderItem.product" for="field_product">Product</label>
           <select class="form-control" id="field_product" data-cy="product" name="product" formControlName="product">
-            <option [ngValue]="null"></option>
+            <option *ngIf="editForm.get(['product'])!.value == null" [ngValue]="null" selected></option>
             <option
               [ngValue]="productOption.id === editForm.get('product')!.value?.id ? editForm.get('product')!.value : productOption"
               *ngFor="let productOption of productsCollection; trackBy: trackProductById"
@@ -69,6 +69,15 @@
               {{ productOption.id }}
             </option>
           </select>
+        </div>
+        <div *ngIf="editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['product'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
         </div>
 
         <div class="row mb-3">
@@ -82,7 +91,7 @@
             name="purchaseOrder"
             formControlName="purchaseOrder"
           >
-            <option [ngValue]="null"></option>
+            <option *ngIf="!editForm.get('purchaseOrder')!.value" [ngValue]="null" selected></option>
             <option
               [ngValue]="
                 purchaseOrderOption.id === editForm.get('purchaseOrder')!.value?.id
@@ -94,6 +103,19 @@
               {{ purchaseOrderOption.id }}
             </option>
           </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['purchaseOrder'])!.invalid && (editForm.get(['purchaseOrder'])!.dirty || editForm.get(['purchaseOrder'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['purchaseOrder'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
         </div>
       </div>
 

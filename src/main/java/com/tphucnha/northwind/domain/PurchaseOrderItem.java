@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * A PurchaseOrderItem.
@@ -34,11 +35,13 @@ public class PurchaseOrderItem implements Serializable {
     private Boolean inventoryPosted;
 
     @JsonIgnoreProperties(value = { "category", "suppliers" }, allowSetters = true)
-    @OneToOne
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "orderItems", "supplier" }, allowSetters = true)
     private PurchaseOrder purchaseOrder;
 

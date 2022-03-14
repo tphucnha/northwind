@@ -10,8 +10,8 @@ export interface IOrderItem {
   discount?: number | null;
   status?: OrderItemStatus | null;
   allocatedDate?: dayjs.Dayjs | null;
-  product?: IProduct | null;
-  order?: ICustomerOrder | null;
+  product?: IProduct;
+  order?: ICustomerOrder;
 }
 
 export class OrderItem implements IOrderItem {
@@ -22,8 +22,8 @@ export class OrderItem implements IOrderItem {
     public discount?: number | null,
     public status?: OrderItemStatus | null,
     public allocatedDate?: dayjs.Dayjs | null,
-    public product?: IProduct | null,
-    public order?: ICustomerOrder | null
+    public product?: IProduct,
+    public order?: ICustomerOrder
   ) {}
 }
 

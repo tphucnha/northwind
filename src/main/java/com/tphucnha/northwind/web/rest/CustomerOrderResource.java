@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +56,8 @@ public class CustomerOrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/customer-orders")
-    public ResponseEntity<CustomerOrderDTO> createCustomerOrder(@RequestBody CustomerOrderDTO customerOrderDTO) throws URISyntaxException {
+    public ResponseEntity<CustomerOrderDTO> createCustomerOrder(@Valid @RequestBody CustomerOrderDTO customerOrderDTO)
+        throws URISyntaxException {
         log.debug("REST request to save CustomerOrder : {}", customerOrderDTO);
         if (customerOrderDTO.getId() != null) {
             throw new BadRequestAlertException("A new customerOrder cannot already have an ID", ENTITY_NAME, "idexists");
@@ -79,7 +82,7 @@ public class CustomerOrderResource {
     @PutMapping("/customer-orders/{id}")
     public ResponseEntity<CustomerOrderDTO> updateCustomerOrder(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CustomerOrderDTO customerOrderDTO
+        @Valid @RequestBody CustomerOrderDTO customerOrderDTO
     ) throws URISyntaxException {
         log.debug("REST request to update CustomerOrder : {}, {}", id, customerOrderDTO);
         if (customerOrderDTO.getId() == null) {
@@ -114,7 +117,7 @@ public class CustomerOrderResource {
     @PatchMapping(value = "/customer-orders/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<CustomerOrderDTO> partialUpdateCustomerOrder(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CustomerOrderDTO customerOrderDTO
+        @NotNull @RequestBody CustomerOrderDTO customerOrderDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update CustomerOrder partially : {}, {}", id, customerOrderDTO);
         if (customerOrderDTO.getId() == null) {

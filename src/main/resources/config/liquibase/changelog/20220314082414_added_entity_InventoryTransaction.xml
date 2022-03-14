@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="product_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_inventory_transaction__product_id" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_inventory_transaction__product_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -60,6 +60,7 @@
             <column name="modified_date" type="date"/>
             <column name="quantity" type="numeric"/>
             <column name="comments" type="string"/>
+            <column name="product_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +56,8 @@ public class PurchaseOrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/purchase-orders")
-    public ResponseEntity<PurchaseOrderDTO> createPurchaseOrder(@RequestBody PurchaseOrderDTO purchaseOrderDTO) throws URISyntaxException {
+    public ResponseEntity<PurchaseOrderDTO> createPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO)
+        throws URISyntaxException {
         log.debug("REST request to save PurchaseOrder : {}", purchaseOrderDTO);
         if (purchaseOrderDTO.getId() != null) {
             throw new BadRequestAlertException("A new purchaseOrder cannot already have an ID", ENTITY_NAME, "idexists");
@@ -79,7 +82,7 @@ public class PurchaseOrderResource {
     @PutMapping("/purchase-orders/{id}")
     public ResponseEntity<PurchaseOrderDTO> updatePurchaseOrder(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody PurchaseOrderDTO purchaseOrderDTO
+        @Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO
     ) throws URISyntaxException {
         log.debug("REST request to update PurchaseOrder : {}, {}", id, purchaseOrderDTO);
         if (purchaseOrderDTO.getId() == null) {
@@ -114,7 +117,7 @@ public class PurchaseOrderResource {
     @PatchMapping(value = "/purchase-orders/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<PurchaseOrderDTO> partialUpdatePurchaseOrder(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody PurchaseOrderDTO purchaseOrderDTO
+        @NotNull @RequestBody PurchaseOrderDTO purchaseOrderDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update PurchaseOrder partially : {}, {}", id, purchaseOrderDTO);
         if (purchaseOrderDTO.getId() == null) {

@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.tphucnha.northwind.IntegrationTest;
 import com.tphucnha.northwind.domain.PurchaseOrder;
+import com.tphucnha.northwind.domain.Supplier;
 import com.tphucnha.northwind.domain.enumeration.PurchaseOrderStatus;
 import com.tphucnha.northwind.repository.PurchaseOrderRepository;
 import com.tphucnha.northwind.service.dto.PurchaseOrderDTO;
@@ -88,6 +89,16 @@ class PurchaseOrderResourceIT {
             .paymentDate(DEFAULT_PAYMENT_DATE)
             .paymentMethod(DEFAULT_PAYMENT_METHOD)
             .paymentAmount(DEFAULT_PAYMENT_AMOUNT);
+        // Add required entity
+        Supplier supplier;
+        if (TestUtil.findAll(em, Supplier.class).isEmpty()) {
+            supplier = SupplierResourceIT.createEntity(em);
+            em.persist(supplier);
+            em.flush();
+        } else {
+            supplier = TestUtil.findAll(em, Supplier.class).get(0);
+        }
+        purchaseOrder.setSupplier(supplier);
         return purchaseOrder;
     }
 
@@ -105,6 +116,16 @@ class PurchaseOrderResourceIT {
             .paymentDate(UPDATED_PAYMENT_DATE)
             .paymentMethod(UPDATED_PAYMENT_METHOD)
             .paymentAmount(UPDATED_PAYMENT_AMOUNT);
+        // Add required entity
+        Supplier supplier;
+        if (TestUtil.findAll(em, Supplier.class).isEmpty()) {
+            supplier = SupplierResourceIT.createUpdatedEntity(em);
+            em.persist(supplier);
+            em.flush();
+        } else {
+            supplier = TestUtil.findAll(em, Supplier.class).get(0);
+        }
+        purchaseOrder.setSupplier(supplier);
         return purchaseOrder;
     }
 

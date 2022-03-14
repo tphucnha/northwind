@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * A CustomerOrder.
@@ -56,7 +57,8 @@ public class CustomerOrder implements Serializable {
     @JsonIgnoreProperties(value = { "product", "order" }, allowSetters = true)
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Customer customer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

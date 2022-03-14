@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * A PurchaseOrder.
@@ -47,7 +48,8 @@ public class PurchaseOrder implements Serializable {
     @JsonIgnoreProperties(value = { "product", "purchaseOrder" }, allowSetters = true)
     private Set<PurchaseOrderItem> orderItems = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
     private Supplier supplier;
 

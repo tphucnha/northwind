@@ -5,6 +5,7 @@ import com.tphucnha.northwind.domain.enumeration.InventoryTransactionType;
 import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * A InventoryTransaction.
@@ -38,7 +39,8 @@ public class InventoryTransaction implements Serializable {
     private String comments;
 
     @JsonIgnoreProperties(value = { "category", "suppliers" }, allowSetters = true)
-    @OneToOne
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private Product product;
 

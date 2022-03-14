@@ -9,7 +9,7 @@ export interface IInventoryTransaction {
   modifiedDate?: dayjs.Dayjs | null;
   quantity?: number | null;
   comments?: string | null;
-  product?: IProduct | null;
+  product?: IProduct;
 }
 
 export class InventoryTransaction implements IInventoryTransaction {
@@ -20,7 +20,7 @@ export class InventoryTransaction implements IInventoryTransaction {
     public modifiedDate?: dayjs.Dayjs | null,
     public quantity?: number | null,
     public comments?: string | null,
-    public product?: IProduct | null
+    public product?: IProduct
   ) {}
 }
 

@@ -99,7 +99,7 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.purchaseOrder.supplier" for="field_supplier">Supplier</label>
           <select class="form-control" id="field_supplier" data-cy="supplier" name="supplier" formControlName="supplier">
-            <option [ngValue]="null"></option>
+            <option *ngIf="!editForm.get('supplier')!.value" [ngValue]="null" selected></option>
             <option
               [ngValue]="supplierOption.id === editForm.get('supplier')!.value?.id ? editForm.get('supplier')!.value : supplierOption"
               *ngFor="let supplierOption of suppliersSharedCollection; trackBy: trackSupplierById"
@@ -107,6 +107,15 @@
               {{ supplierOption.id }}
             </option>
           </select>
+        </div>
+        <div *ngIf="editForm.get(['supplier'])!.invalid && (editForm.get(['supplier'])!.dirty || editForm.get(['supplier'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['supplier'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
         </div>
       </div>
 

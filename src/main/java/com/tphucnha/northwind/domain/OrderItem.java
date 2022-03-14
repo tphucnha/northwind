@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * A OrderItem.
@@ -39,11 +40,13 @@ public class OrderItem implements Serializable {
     private Instant allocatedDate;
 
     @JsonIgnoreProperties(value = { "category", "suppliers" }, allowSetters = true)
-    @OneToOne
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "orderItems", "customer" }, allowSetters = true)
     private CustomerOrder order;
 

@@ -12,7 +12,7 @@ export interface IPurchaseOrder {
   paymentMethod?: string | null;
   paymentAmount?: number | null;
   orderItems?: IPurchaseOrderItem[] | null;
-  supplier?: ISupplier | null;
+  supplier?: ISupplier;
 }
 
 export class PurchaseOrder implements IPurchaseOrder {
@@ -25,7 +25,7 @@ export class PurchaseOrder implements IPurchaseOrder {
     public paymentMethod?: string | null,
     public paymentAmount?: number | null,
     public orderItems?: IPurchaseOrderItem[] | null,
-    public supplier?: ISupplier | null
+    public supplier?: ISupplier
   ) {}
 }
 

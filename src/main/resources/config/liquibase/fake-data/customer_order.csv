@@ -1,11 +1,11 @@
-id;order_date;shipped_date;ship_address;shipping_fee;taxes;payment_method;paid_date;status;notes
-1;2022-03-13T18:23:50;2022-03-14T03:38:53;Wells;40063;27597;Officer Hat user;2022-03-14T01:37:11;INVOICED;Alabama Technician
-2;2022-03-14T06:28:13;2022-03-13T16:08:54;neural-net Pa'anga B2B;76727;64359;Cambridgeshire navigate Fish;2022-03-13T16:32:17;INVOICED;Granite
-3;2022-03-13T08:52:06;2022-03-13T17:44:51;Architect Sleek;65790;99605;Savings THX Multi-lateral;2022-03-13T09:59:42;CLOSED;salmon
-4;2022-03-14T07:17:43;2022-03-13T23:42:24;Mauritania Division;3446;77267;HDD Dynamic;2022-03-14T07:27:51;INVOICED;Krona Garden Fully-configurable
-5;2022-03-13T15:37:24;2022-03-13T22:09:19;indexing;72794;90803;Maryland Palestinian;2022-03-13T16:35:32;SHIPPED;initiatives Alabama Bike
-6;2022-03-13T18:53:51;2022-03-13T14:21:42;Metal Agent intangible;69061;46377;Massachusetts;2022-03-13T16:16:10;CLOSED;Cuban
-7;2022-03-14T00:42:59;2022-03-13T14:07:48;Taiwan maximize Taka;8285;3010;Run;2022-03-13T13:34:32;CLOSED;Washington
-8;2022-03-14T00:09:16;2022-03-14T01:04:51;Granite;56090;43104;programming;2022-03-14T07:13:45;CLOSED;indexing Assurance
-9;2022-03-14T02:38:37;2022-03-13T22:22:26;Toys Liaison;56840;33786;Vista hacking Ohio;2022-03-13T20:25:59;INVOICED;bypass
-10;2022-03-13T11:00:59;2022-03-13T16:30:49;connecting Handmade;56346;20882;Berkshire of Salad;2022-03-13T22:06:51;SHIPPED;Chips
+id;order_date;shipped_date;ship_address;shipping_fee;taxes;payment_method;paid_date;status;notes;customer_id
+1;2022-03-13T18:23:50;2022-03-14T03:38:53;Wells;40063;27597;Officer Hat user;2022-03-14T01:37:11;INVOICED;Alabama Technician;1
+2;2022-03-14T06:28:13;2022-03-13T16:08:54;neural-net Pa'anga B2B;76727;64359;Cambridgeshire navigate Fish;2022-03-13T16:32:17;INVOICED;Granite;2
+3;2022-03-13T08:52:06;2022-03-13T17:44:51;Architect Sleek;65790;99605;Savings THX Multi-lateral;2022-03-13T09:59:42;CLOSED;salmon;3
+4;2022-03-14T07:17:43;2022-03-13T23:42:24;Mauritania Division;3446;77267;HDD Dynamic;2022-03-14T07:27:51;INVOICED;Krona Garden Fully-configurable;4
+5;2022-03-13T15:37:24;2022-03-13T22:09:19;indexing;72794;90803;Maryland Palestinian;2022-03-13T16:35:32;SHIPPED;initiatives Alabama Bike;5
+6;2022-03-13T18:53:51;2022-03-13T14:21:42;Metal Agent intangible;69061;46377;Massachusetts;2022-03-13T16:16:10;CLOSED;Cuban;6
+7;2022-03-14T00:42:59;2022-03-13T14:07:48;Taiwan maximize Taka;8285;3010;Run;2022-03-13T13:34:32;CLOSED;Washington;7
+8;2022-03-14T00:09:16;2022-03-14T01:04:51;Granite;56090;43104;programming;2022-03-14T07:13:45;CLOSED;indexing Assurance;8
+9;2022-03-14T02:38:37;2022-03-13T22:22:26;Toys Liaison;56840;33786;Vista hacking Ohio;2022-03-13T20:25:59;INVOICED;bypass;9
+10;2022-03-13T11:00:59;2022-03-13T16:30:49;connecting Handmade;56346;20882;Berkshire of Salad;2022-03-13T22:06:51;SHIPPED;Chips;10

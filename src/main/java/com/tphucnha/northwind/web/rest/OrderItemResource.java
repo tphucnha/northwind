@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class OrderItemResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/order-items")
-    public ResponseEntity<OrderItemDTO> createOrderItem(@RequestBody OrderItemDTO orderItemDTO) throws URISyntaxException {
+    public ResponseEntity<OrderItemDTO> createOrderItem(@Valid @RequestBody OrderItemDTO orderItemDTO) throws URISyntaxException {
         log.debug("REST request to save OrderItem : {}", orderItemDTO);
         if (orderItemDTO.getId() != null) {
             throw new BadRequestAlertException("A new orderItem cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class OrderItemResource {
     @PutMapping("/order-items/{id}")
     public ResponseEntity<OrderItemDTO> updateOrderItem(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody OrderItemDTO orderItemDTO
+        @Valid @RequestBody OrderItemDTO orderItemDTO
     ) throws URISyntaxException {
         log.debug("REST request to update OrderItem : {}, {}", id, orderItemDTO);
         if (orderItemDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class OrderItemResource {
     @PatchMapping(value = "/order-items/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<OrderItemDTO> partialUpdateOrderItem(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody OrderItemDTO orderItemDTO
+        @NotNull @RequestBody OrderItemDTO orderItemDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update OrderItem partially : {}, {}", id, orderItemDTO);
         if (orderItemDTO.getId() == null) {

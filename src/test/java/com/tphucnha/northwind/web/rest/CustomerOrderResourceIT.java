@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.tphucnha.northwind.IntegrationTest;
+import com.tphucnha.northwind.domain.Customer;
 import com.tphucnha.northwind.domain.CustomerOrder;
 import com.tphucnha.northwind.domain.enumeration.OrderStatus;
 import com.tphucnha.northwind.repository.CustomerOrderRepository;
@@ -100,6 +101,16 @@ class CustomerOrderResourceIT {
             .paidDate(DEFAULT_PAID_DATE)
             .status(DEFAULT_STATUS)
             .notes(DEFAULT_NOTES);
+        // Add required entity
+        Customer customer;
+        if (TestUtil.findAll(em, Customer.class).isEmpty()) {
+            customer = CustomerResourceIT.createEntity(em);
+            em.persist(customer);
+            em.flush();
+        } else {
+            customer = TestUtil.findAll(em, Customer.class).get(0);
+        }
+        customerOrder.setCustomer(customer);
         return customerOrder;
     }
 
@@ -120,6 +131,16 @@ class CustomerOrderResourceIT {
             .paidDate(UPDATED_PAID_DATE)
             .status(UPDATED_STATUS)
             .notes(UPDATED_NOTES);
+        // Add required entity
+        Customer customer;
+        if (TestUtil.findAll(em, Customer.class).isEmpty()) {
+            customer = CustomerResourceIT.createUpdatedEntity(em);
+            em.persist(customer);
+            em.flush();
+        } else {
+            customer = TestUtil.findAll(em, Customer.class).get(0);
+        }
+        customerOrder.setCustomer(customer);
         return customerOrder;
     }
 

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.tphucnha.northwind.IntegrationTest;
 import com.tphucnha.northwind.domain.InventoryTransaction;
+import com.tphucnha.northwind.domain.Product;
 import com.tphucnha.northwind.domain.enumeration.InventoryTransactionType;
 import com.tphucnha.northwind.repository.InventoryTransactionRepository;
 import com.tphucnha.northwind.service.dto.InventoryTransactionDTO;
@@ -82,6 +83,16 @@ class InventoryTransactionResourceIT {
             .modifiedDate(DEFAULT_MODIFIED_DATE)
             .quantity(DEFAULT_QUANTITY)
             .comments(DEFAULT_COMMENTS);
+        // Add required entity
+        Product product;
+        if (TestUtil.findAll(em, Product.class).isEmpty()) {
+            product = ProductResourceIT.createEntity(em);
+            em.persist(product);
+            em.flush();
+        } else {
+            product = TestUtil.findAll(em, Product.class).get(0);
+        }
+        inventoryTransaction.setProduct(product);
         return inventoryTransaction;
     }
 
@@ -98,6 +109,16 @@ class InventoryTransactionResourceIT {
             .modifiedDate(UPDATED_MODIFIED_DATE)
             .quantity(UPDATED_QUANTITY)
             .comments(UPDATED_COMMENTS);
+        // Add required entity
+        Product product;
+        if (TestUtil.findAll(em, Product.class).isEmpty()) {
+            product = ProductResourceIT.createUpdatedEntity(em);
+            em.persist(product);
+            em.flush();
+        } else {
+            product = TestUtil.findAll(em, Product.class).get(0);
+        }
+        inventoryTransaction.setProduct(product);
         return inventoryTransaction;
     }
 
