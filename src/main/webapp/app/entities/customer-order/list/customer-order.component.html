@@ -60,6 +60,9 @@
           <th scope="col" jhiSortBy="notes">
             <span jhiTranslate="northwindApp.customerOrder.notes">Notes</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="customer.id">
+            <span jhiTranslate="northwindApp.customerOrder.customer">Customer</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="inventoryTransaction.id">
             <span jhiTranslate="northwindApp.customerOrder.inventoryTransaction">Inventory Transaction</span>
             <fa-icon icon="sort"></fa-icon>
@@ -81,6 +84,11 @@
           <td>{{ customerOrder.paidDate | formatMediumDatetime }}</td>
           <td jhiTranslate="{{ 'northwindApp.OrderStatus.' + customerOrder.status }}">{{ customerOrder.status }}</td>
           <td>{{ customerOrder.notes }}</td>
+          <td>
+            <div *ngIf="customerOrder.customer">
+              <a [routerLink]="['/customer', customerOrder.customer?.id, 'view']">{{ customerOrder.customer?.id }}</a>
+            </div>
+          </td>
           <td>
             <div *ngIf="customerOrder.inventoryTransaction">
               <a [routerLink]="['/inventory-transaction', customerOrder.inventoryTransaction?.id, 'view']">{{

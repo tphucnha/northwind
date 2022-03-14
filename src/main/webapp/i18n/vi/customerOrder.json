@@ -27,8 +27,8 @@
       "paidDate": "Paid Date",
       "status": "Status",
       "notes": "Notes",
-      "customer": "Customer",
       "orderItems": "Order Items",
+      "customer": "Customer",
       "inventoryTransaction": "Inventory Transaction"
     }
   }

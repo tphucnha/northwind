@@ -2,6 +2,8 @@ package com.tphucnha.northwind.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -34,9 +36,9 @@ public class Customer implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "customers", "orderItems", "inventoryTransaction" }, allowSetters = true)
-    private CustomerOrder order;
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnoreProperties(value = { "orderItems", "customer", "inventoryTransaction" }, allowSetters = true)
+    private Set<CustomerOrder> orders = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -118,16 +120,34 @@ public class Customer implements Serializable {
         this.phone = phone;
     }
 
-    public CustomerOrder getOrder() {
-        return this.order;
+    public Set<CustomerOrder> getOrders() {
+        return this.orders;
     }
 
-    public void setOrder(CustomerOrder customerOrder) {
-        this.order = customerOrder;
+    public void setOrders(Set<CustomerOrder> customerOrders) {
+        if (this.orders != null) {
+            this.orders.forEach(i -> i.setCustomer(null));
+        }
+        if (customerOrders != null) {
+            customerOrders.forEach(i -> i.setCustomer(this));
+        }
+        this.orders = customerOrders;
     }
 
-    public Customer order(CustomerOrder customerOrder) {
-        this.setOrder(customerOrder);
+    public Customer orders(Set<CustomerOrder> customerOrders) {
+        this.setOrders(customerOrders);
+        return this;
+    }
+
+    public Customer addOrders(CustomerOrder customerOrder) {
+        this.orders.add(customerOrder);
+        customerOrder.setCustomer(this);
+        return this;
+    }
+
+    public Customer removeOrders(CustomerOrder customerOrder) {
+        this.orders.remove(customerOrder);
+        customerOrder.setCustomer(null);
         return this;
     }
 

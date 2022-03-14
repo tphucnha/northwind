@@ -40,7 +40,7 @@ public class InventoryTransaction implements Serializable {
     private String comments;
 
     @OneToMany(mappedBy = "inventoryTransaction")
-    @JsonIgnoreProperties(value = { "customers", "orderItems", "inventoryTransaction" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "orderItems", "customer", "inventoryTransaction" }, allowSetters = true)
     private Set<CustomerOrder> orders = new HashSet<>();
 
     @OneToMany(mappedBy = "inventoryTransaction")

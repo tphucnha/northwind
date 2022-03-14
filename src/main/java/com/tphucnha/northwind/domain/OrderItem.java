@@ -48,7 +48,7 @@ public class OrderItem implements Serializable {
     private Set<Product> products = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "customers", "orderItems", "inventoryTransaction" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "orderItems", "customer", "inventoryTransaction" }, allowSetters = true)
     private CustomerOrder order;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

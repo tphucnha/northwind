@@ -31,6 +31,8 @@ public class CustomerOrderDTO implements Serializable {
 
     private String notes;
 
+    private CustomerDTO customer;
+
     private InventoryTransactionDTO inventoryTransaction;
 
     public Long getId() {
@@ -113,6 +115,14 @@ public class CustomerOrderDTO implements Serializable {
         this.notes = notes;
     }
 
+    public CustomerDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
+    }
+
     public InventoryTransactionDTO getInventoryTransaction() {
         return inventoryTransaction;
     }
@@ -156,6 +166,7 @@ public class CustomerOrderDTO implements Serializable {
             ", paidDate='" + getPaidDate() + "'" +
             ", status='" + getStatus() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", customer=" + getCustomer() +
             ", inventoryTransaction=" + getInventoryTransaction() +
             "}";
     }

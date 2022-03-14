@@ -34,12 +34,6 @@
         <dd>
           <span>{{ customer.phone }}</span>
         </dd>
-        <dt><span jhiTranslate="northwindApp.customer.order">Order</span></dt>
-        <dd>
-          <div *ngIf="customer.order">
-            <a [routerLink]="['/customer-order', customer.order?.id, 'view']">{{ customer.order?.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

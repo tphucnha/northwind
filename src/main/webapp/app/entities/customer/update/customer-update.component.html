@@ -37,19 +37,6 @@
           <label class="form-label" jhiTranslate="northwindApp.customer.phone" for="field_phone">Phone</label>
           <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="northwindApp.customer.order" for="field_order">Order</label>
-          <select class="form-control" id="field_order" data-cy="order" name="order" formControlName="order">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="customerOrderOption.id === editForm.get('order')!.value?.id ? editForm.get('order')!.value : customerOrderOption"
-              *ngFor="let customerOrderOption of customerOrdersSharedCollection; trackBy: trackCustomerOrderById"
-            >
-              {{ customerOrderOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

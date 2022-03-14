@@ -7,7 +7,7 @@ export interface ICustomer {
   lastName?: string | null;
   address?: string | null;
   phone?: string | null;
-  order?: ICustomerOrder | null;
+  orders?: ICustomerOrder[] | null;
 }
 
 export class Customer implements ICustomer {
@@ -18,7 +18,7 @@ export class Customer implements ICustomer {
     public lastName?: string | null,
     public address?: string | null,
     public phone?: string | null,
-    public order?: ICustomerOrder | null
+    public orders?: ICustomerOrder[] | null
   ) {}
 }
 

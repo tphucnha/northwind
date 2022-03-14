@@ -137,7 +137,6 @@ enum PurchaseOrderStatus {
 }
 
 relationship OneToMany {
-  CustomerOrder{customer} to Customer{order}
   InventoryTransaction{order} to CustomerOrder{inventoryTransaction}
   CustomerOrder{orderItems} to OrderItem{order}
   OrderItem{product} to Product{orderItem}
@@ -149,6 +148,7 @@ relationship OneToMany {
 relationship ManyToOne {
   Product{category} to Category
   PurchaseOrder{supplier} to Supplier
+  CustomerOrder{customer} to Customer{orders}
 }
 relationship ManyToMany {
   Product{suppliers} to Supplier{products}

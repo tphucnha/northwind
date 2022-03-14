@@ -35,8 +35,8 @@
     {
       "otherEntityName": "customerOrder",
       "otherEntityRelationshipName": "customer",
-      "relationshipName": "order",
-      "relationshipType": "many-to-one"
+      "relationshipName": "orders",
+      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceClass"

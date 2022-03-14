@@ -20,8 +20,6 @@ public class CustomerDTO implements Serializable {
 
     private String phone;
 
-    private CustomerOrderDTO order;
-
     public Long getId() {
         return id;
     }
@@ -70,14 +68,6 @@ public class CustomerDTO implements Serializable {
         this.phone = phone;
     }
 
-    public CustomerOrderDTO getOrder() {
-        return order;
-    }
-
-    public void setOrder(CustomerOrderDTO order) {
-        this.order = order;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,7 +99,6 @@ public class CustomerDTO implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", address='" + getAddress() + "'" +
             ", phone='" + getPhone() + "'" +
-            ", order=" + getOrder() +
             "}";
     }
 }

@@ -3,12 +3,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { ICustomer, Customer } from '../customer.model';
 import { CustomerService } from '../service/customer.service';
-import { ICustomerOrder } from 'app/entities/customer-order/customer-order.model';
-import { CustomerOrderService } from 'app/entities/customer-order/service/customer-order.service';
 
 @Component({
   selector: 'jhi-customer-update',
@@ -17,8 +15,6 @@ import { CustomerOrderService } from 'app/entities/customer-order/service/custom
 export class CustomerUpdateComponent implements OnInit {
   isSaving = false;
 
-  customerOrdersSharedCollection: ICustomerOrder[] = [];
-
   editForm = this.fb.group({
     id: [],
     company: [],
@@ -26,21 +22,13 @@ export class CustomerUpdateComponent implements OnInit {
     lastName: [],
     address: [],
     phone: [],
-    order: [],
   });
 
-  constructor(
-    protected customerService: CustomerService,
-    protected customerOrderService: CustomerOrderService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
+  constructor(protected customerService: CustomerService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ customer }) => {
       this.updateForm(customer);
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -56,10 +44,6 @@ export class CustomerUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.customerService.create(customer));
     }
-  }
-
-  trackCustomerOrderById(index: number, item: ICustomerOrder): number {
-    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICustomer>>): void {
@@ -89,25 +73,7 @@ export class CustomerUpdateComponent implements OnInit {
       lastName: customer.lastName,
       address: customer.address,
       phone: customer.phone,
-      order: customer.order,
     });
-
-    this.customerOrdersSharedCollection = this.customerOrderService.addCustomerOrderToCollectionIfMissing(
-      this.customerOrdersSharedCollection,
-      customer.order
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.customerOrderService
-      .query()
-      .pipe(map((res: HttpResponse<ICustomerOrder[]>) => res.body ?? []))
-      .pipe(
-        map((customerOrders: ICustomerOrder[]) =>
-          this.customerOrderService.addCustomerOrderToCollectionIfMissing(customerOrders, this.editForm.get('order')!.value)
-        )
-      )
-      .subscribe((customerOrders: ICustomerOrder[]) => (this.customerOrdersSharedCollection = customerOrders));
   }
 
   protected createFromForm(): ICustomer {
@@ -119,7 +85,6 @@ export class CustomerUpdateComponent implements OnInit {
       lastName: this.editForm.get(['lastName'])!.value,
       address: this.editForm.get(['address'])!.value,
       phone: this.editForm.get(['phone'])!.value,
-      order: this.editForm.get(['order'])!.value,
     };
   }
 }

@@ -7,8 +7,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Customer} and its DTO {@link CustomerDTO}.
  */
-@Mapper(componentModel = "spring", uses = { CustomerOrderMapper.class })
+@Mapper(componentModel = "spring", uses = {})
 public interface CustomerMapper extends EntityMapper<CustomerDTO, Customer> {
-    @Mapping(target = "order", source = "order", qualifiedByName = "id")
-    CustomerDTO toDto(Customer s);
+    @Named("id")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    CustomerDTO toDtoId(Customer customer);
 }

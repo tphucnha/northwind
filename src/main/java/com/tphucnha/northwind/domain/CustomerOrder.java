@@ -53,12 +53,12 @@ public class CustomerOrder implements Serializable {
     private String notes;
 
     @OneToMany(mappedBy = "order")
-    @JsonIgnoreProperties(value = { "order" }, allowSetters = true)
-    private Set<Customer> customers = new HashSet<>();
-
-    @OneToMany(mappedBy = "order")
     @JsonIgnoreProperties(value = { "products", "order" }, allowSetters = true)
     private Set<OrderItem> orderItems = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "orders" }, allowSetters = true)
+    private Customer customer;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "orders", "products", "purchaseOrders" }, allowSetters = true)
@@ -196,37 +196,6 @@ public class CustomerOrder implements Serializable {
         this.notes = notes;
     }
 
-    public Set<Customer> getCustomers() {
-        return this.customers;
-    }
-
-    public void setCustomers(Set<Customer> customers) {
-        if (this.customers != null) {
-            this.customers.forEach(i -> i.setOrder(null));
-        }
-        if (customers != null) {
-            customers.forEach(i -> i.setOrder(this));
-        }
-        this.customers = customers;
-    }
-
-    public CustomerOrder customers(Set<Customer> customers) {
-        this.setCustomers(customers);
-        return this;
-    }
-
-    public CustomerOrder addCustomer(Customer customer) {
-        this.customers.add(customer);
-        customer.setOrder(this);
-        return this;
-    }
-
-    public CustomerOrder removeCustomer(Customer customer) {
-        this.customers.remove(customer);
-        customer.setOrder(null);
-        return this;
-    }
-
     public Set<OrderItem> getOrderItems() {
         return this.orderItems;
     }
@@ -255,6 +224,19 @@ public class CustomerOrder implements Serializable {
     public CustomerOrder removeOrderItems(OrderItem orderItem) {
         this.orderItems.remove(orderItem);
         orderItem.setOrder(null);
+        return this;
+    }
+
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public CustomerOrder customer(Customer customer) {
+        this.setCustomer(customer);
         return this;
     }
 

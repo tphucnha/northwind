@@ -50,6 +50,12 @@
         <dd>
           <span>{{ customerOrder.notes }}</span>
         </dd>
+        <dt><span jhiTranslate="northwindApp.customerOrder.customer">Customer</span></dt>
+        <dd>
+          <div *ngIf="customerOrder.customer">
+            <a [routerLink]="['/customer', customerOrder.customer?.id, 'view']">{{ customerOrder.customer?.id }}</a>
+          </div>
+        </dd>
         <dt><span jhiTranslate="northwindApp.customerOrder.inventoryTransaction">Inventory Transaction</span></dt>
         <dd>
           <div *ngIf="customerOrder.inventoryTransaction">

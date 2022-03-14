@@ -41,6 +41,9 @@
             <column name="notes" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="customer_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="inventory_transaction_id" type="bigint">
                 <constraints nullable="true" />
             </column>

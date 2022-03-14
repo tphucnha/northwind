@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
-import { ICustomer } from 'app/entities/customer/customer.model';
 import { IOrderItem } from 'app/entities/order-item/order-item.model';
+import { ICustomer } from 'app/entities/customer/customer.model';
 import { IInventoryTransaction } from 'app/entities/inventory-transaction/inventory-transaction.model';
 import { OrderStatus } from 'app/entities/enumerations/order-status.model';
 
@@ -15,8 +15,8 @@ export interface ICustomerOrder {
   paidDate?: dayjs.Dayjs | null;
   status?: OrderStatus | null;
   notes?: string | null;
-  customers?: ICustomer[] | null;
   orderItems?: IOrderItem[] | null;
+  customer?: ICustomer | null;
   inventoryTransaction?: IInventoryTransaction | null;
 }
 
@@ -32,8 +32,8 @@ export class CustomerOrder implements ICustomerOrder {
     public paidDate?: dayjs.Dayjs | null,
     public status?: OrderStatus | null,
     public notes?: string | null,
-    public customers?: ICustomer[] | null,
     public orderItems?: IOrderItem[] | null,
+    public customer?: ICustomer | null,
     public inventoryTransaction?: IInventoryTransaction | null
   ) {}
 }

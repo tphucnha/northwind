@@ -38,7 +38,6 @@
           <th scope="col"><span jhiTranslate="northwindApp.customer.lastName">Last Name</span></th>
           <th scope="col"><span jhiTranslate="northwindApp.customer.address">Address</span></th>
           <th scope="col"><span jhiTranslate="northwindApp.customer.phone">Phone</span></th>
-          <th scope="col"><span jhiTranslate="northwindApp.customer.order">Order</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -52,11 +51,6 @@
           <td>{{ customer.lastName }}</td>
           <td>{{ customer.address }}</td>
           <td>{{ customer.phone }}</td>
-          <td>
-            <div *ngIf="customer.order">
-              <a [routerLink]="['/customer-order', customer.order?.id, 'view']">{{ customer.order?.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
