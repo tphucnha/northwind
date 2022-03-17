@@ -31,7 +31,7 @@ export class OrderItemUpdateComponent implements OnInit {
     id: [],
     quantity: [],
     unitPrice: [],
-    discount: [],
+    discount: [null, [Validators.min(0), Validators.max(100)]],
     status: [],
     allocatedDate: [],
     product: [null, Validators.required],

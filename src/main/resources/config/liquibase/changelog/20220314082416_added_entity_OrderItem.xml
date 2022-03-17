@@ -20,7 +20,7 @@
             <column name="unit_price" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="discount" type="bigint">
+            <column name="discount" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(255)">

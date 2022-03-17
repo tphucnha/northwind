@@ -44,8 +44,8 @@ class OrderItemResourceIT {
     private static final BigDecimal DEFAULT_UNIT_PRICE = new BigDecimal(1);
     private static final BigDecimal UPDATED_UNIT_PRICE = new BigDecimal(2);
 
-    private static final Long DEFAULT_DISCOUNT = 1L;
-    private static final Long UPDATED_DISCOUNT = 2L;
+    private static final Integer DEFAULT_DISCOUNT = 0;
+    private static final Integer UPDATED_DISCOUNT = 1;
 
     private static final OrderItemStatus DEFAULT_STATUS = OrderItemStatus.NONE;
     private static final OrderItemStatus UPDATED_STATUS = OrderItemStatus.ALLOCATED;
@@ -204,7 +204,7 @@ class OrderItemResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(orderItem.getId().intValue())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
-            .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].allocatedDate").value(hasItem(DEFAULT_ALLOCATED_DATE.toString())));
     }
@@ -223,7 +223,7 @@ class OrderItemResourceIT {
             .andExpect(jsonPath("$.id").value(orderItem.getId().intValue()))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.intValue()))
             .andExpect(jsonPath("$.unitPrice").value(sameNumber(DEFAULT_UNIT_PRICE)))
-            .andExpect(jsonPath("$.discount").value(DEFAULT_DISCOUNT.intValue()))
+            .andExpect(jsonPath("$.discount").value(DEFAULT_DISCOUNT))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.allocatedDate").value(DEFAULT_ALLOCATED_DATE.toString()));
     }

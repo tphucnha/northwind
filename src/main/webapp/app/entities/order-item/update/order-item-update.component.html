@@ -26,6 +26,31 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.orderItem.discount" for="field_discount">Discount</label>
           <input type="number" class="form-control" name="discount" id="field_discount" data-cy="discount" formControlName="discount" />
+          <div *ngIf="editForm.get('discount')!.invalid && (editForm.get('discount')!.dirty || editForm.get('discount')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('discount')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              This field should be at least 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('discount')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be more than 100.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('discount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">

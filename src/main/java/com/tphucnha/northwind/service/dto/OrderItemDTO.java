@@ -18,7 +18,9 @@ public class OrderItemDTO implements Serializable {
 
     private BigDecimal unitPrice;
 
-    private Long discount;
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer discount;
 
     private OrderItemStatus status;
 
@@ -52,11 +54,11 @@ public class OrderItemDTO implements Serializable {
         this.unitPrice = unitPrice;
     }
 
-    public Long getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 

@@ -29,8 +29,10 @@ public class OrderItem implements Serializable {
     @Column(name = "unit_price", precision = 21, scale = 2)
     private BigDecimal unitPrice;
 
+    @Min(value = 0)
+    @Max(value = 100)
     @Column(name = "discount")
-    private Long discount;
+    private Integer discount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -91,16 +93,16 @@ public class OrderItem implements Serializable {
         this.unitPrice = unitPrice;
     }
 
-    public Long getDiscount() {
+    public Integer getDiscount() {
         return this.discount;
     }
 
-    public OrderItem discount(Long discount) {
+    public OrderItem discount(Integer discount) {
         this.setDiscount(discount);
         return this;
     }
 
-    public void setDiscount(Long discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 

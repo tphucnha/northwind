@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -33,6 +34,8 @@ public class CustomerOrderDTO implements Serializable {
     private String notes;
 
     private CustomerDTO customer;
+
+    private Set<OrderItemDTO> orderItems;
 
     public Long getId() {
         return id;
@@ -120,6 +123,14 @@ public class CustomerOrderDTO implements Serializable {
 
     public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
+    }
+
+    public Set<OrderItemDTO> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItemDTO> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override

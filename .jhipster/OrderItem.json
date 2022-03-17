@@ -15,7 +15,10 @@
     },
     {
       "fieldName": "discount",
-      "fieldType": "Long"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "100",
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "status",
