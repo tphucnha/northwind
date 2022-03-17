@@ -1,0 +1,185 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="container">
+    <div class="row">
+      <div class="col-10">
+        <h2
+          id="jhi-customer-order-heading"
+          data-cy="CustomerOrderCreateUpdateHeading"
+          jhiTranslate="northwindApp.customerOrder.home.createOrEditLabel"
+        >
+          Create or edit a Customer Order
+        </h2>
+
+      </div>
+      <div class="col-2">
+        <div class="row mb-3">
+          <!--          <label class="form-label" jhiTranslate="northwindApp.customerOrder.status" for="field_status">Status</label>-->
+          <select class="form-control form-control-sm" name="status" formControlName="status" id="field_status"
+                  data-cy="status">
+            <option [ngValue]="null">{{ 'northwindApp.OrderStatus.null' | translate }}</option>
+            <option *ngFor="let orderStatus of orderStatusValues" [value]="orderStatus">
+              {{ 'northwindApp.OrderStatus.' + orderStatus | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <jhi-alert-error></jhi-alert-error>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <div>
+          <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control form-control-sm" name="id" id="field_id" data-cy="id"
+                   formControlName="id"
+                   [readonly]="true"/>
+          </div>
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="northwindApp.customerOrder.orderDate" for="field_orderDate">Order
+              Date</label>
+            <div class="d-flex">
+              <input
+                id="field_orderDate"
+                data-cy="orderDate"
+                type="datetime-local"
+                class="form-control form-control-sm"
+                name="orderDate"
+                formControlName="orderDate"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="northwindApp.customerOrder.customer"
+                   for="field_customer">Customer</label>
+            <select class="form-control form-control-sm" id="field_customer" data-cy="customer" name="customer"
+                    formControlName="customer">
+              <option *ngIf="!editForm.get('customer')!.value" [ngValue]="null" selected></option>
+              <option
+                [ngValue]="customerOption.id === editForm.get('customer')!.value?.id ? editForm.get('customer')!.value : customerOption"
+                *ngFor="let customerOption of customersSharedCollection; trackBy: trackCustomerById"
+              >
+                {{ customerOption.id }}
+                |
+                {{ customerOption.firstName }}
+                |
+                {{ customerOption.lastName }}
+              </option>
+            </select>
+          </div>
+          <div
+            *ngIf="editForm.get(['customer'])!.invalid && (editForm.get(['customer'])!.dirty || editForm.get(['customer'])!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['customer'])?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.shipAddress" for="field_shipAddress">Ship
+            Address</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="shipAddress"
+            id="field_shipAddress"
+            data-cy="shipAddress"
+            formControlName="shipAddress"
+          />
+        </div>
+      </div>
+      <div class="col-4" *ngIf="editForm.get('id')!.value != null">
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.shippedDate" for="field_shippedDate">Shipped
+            Date</label>
+          <div class="d-flex">
+            <input
+              id="field_shippedDate"
+              data-cy="shippedDate"
+              type="datetime-local"
+              class="form-control form-control-sm"
+              name="shippedDate"
+              formControlName="shippedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.shippingFee" for="field_shippingFee">Shipping
+            Fee</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            name="shippingFee"
+            id="field_shippingFee"
+            data-cy="shippingFee"
+            formControlName="shippingFee"
+          />
+        </div>
+      </div>
+      <div class="col-4" *ngIf="editForm.get('id')!.value != null">
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.paidDate" for="field_paidDate">Paid
+            Date</label>
+          <div class="d-flex">
+            <input
+              id="field_paidDate"
+              data-cy="paidDate"
+              type="datetime-local"
+              class="form-control form-control-sm"
+              name="paidDate"
+              formControlName="paidDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.paymentMethod" for="field_paymentMethod">Payment
+            Method</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="paymentMethod"
+            id="field_paymentMethod"
+            data-cy="paymentMethod"
+            formControlName="paymentMethod"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.notes" for="field_notes">Notes</label>
+          <input type="text" class="form-control form-control-sm" name="notes" id="field_notes" data-cy="notes"
+                 formControlName="notes"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+                (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

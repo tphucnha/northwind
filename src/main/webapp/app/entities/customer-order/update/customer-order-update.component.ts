@@ -52,6 +52,7 @@ export class CustomerOrderUpdateComponent implements OnInit {
         customerOrder.orderDate = today;
         customerOrder.shippedDate = today;
         customerOrder.paidDate = today;
+        customerOrder.status = OrderStatus.NEW;
       }
 
       this.updateForm(customerOrder);
