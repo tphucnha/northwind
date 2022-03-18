@@ -11,7 +11,15 @@
         </h2>
 
       </div>
-      <div class="col-2">
+      <div class="col-1">
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+<!--          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>-->
+          <input type="number" class="form-control form-control-sm" name="id" id="field_id" data-cy="id"
+                 formControlName="id"
+                 [readonly]="true"/>
+        </div>
+      </div>
+      <div class="col-1">
         <div class="row mb-3">
           <!--          <label class="form-label" jhiTranslate="northwindApp.customerOrder.status" for="field_status">Status</label>-->
           <select class="form-control form-control-sm" name="status" formControlName="status" id="field_status"
@@ -28,13 +36,6 @@
     <div class="row">
       <div class="col-4">
         <div>
-          <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
-            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-            <input type="number" class="form-control form-control-sm" name="id" id="field_id" data-cy="id"
-                   formControlName="id"
-                   [readonly]="true"/>
-          </div>
-
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="northwindApp.customerOrder.orderDate" for="field_orderDate">Order
               Date</label>
@@ -92,6 +93,12 @@
             data-cy="shipAddress"
             formControlName="shipAddress"
           />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="northwindApp.customerOrder.notes" for="field_notes">Notes</label>
+          <input type="text" class="form-control form-control-sm" name="notes" id="field_notes" data-cy="notes"
+                 formControlName="notes"/>
         </div>
       </div>
       <div class="col-4" *ngIf="editForm.get('id')!.value != null">
@@ -155,18 +162,12 @@
             formControlName="paymentMethod"
           />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="northwindApp.customerOrder.notes" for="field_notes">Notes</label>
-          <input type="text" class="form-control form-control-sm" name="notes" id="field_notes" data-cy="notes"
-                 formControlName="notes"/>
-        </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
         <button
-          type="submit"
+          type="submit"otes
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"

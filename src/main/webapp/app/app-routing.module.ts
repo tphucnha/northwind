@@ -22,10 +22,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
         },
         {
           path: 'order',
-          data: {
-            authorities: [Authority.USER],
-          },
-          canActivate: [UserRouteAccessService],
           loadChildren: () => import('./order/order.module').then(m => m.OrderModule),
         },
         {

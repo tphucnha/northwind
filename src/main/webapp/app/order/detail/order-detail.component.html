@@ -1,0 +1,91 @@
+<div class="container">
+  <div *ngIf="customerOrder">
+    <div class="row">
+      <div class="col-9">
+        <h2 data-cy="customerOrderDetailsHeading"><span jhiTranslate="northwindApp.customerOrder.detail.title">Customer Order</span>
+        </h2>
+      </div>
+      <div class="col-1">
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ customerOrder.id }}</span>
+          </dd>
+        </dl>
+      </div>
+      <div class="col-2">
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="northwindApp.customerOrder.status">Status</span></dt>
+          <dd>
+          <span
+            jhiTranslate="{{ 'northwindApp.OrderStatus.' + customerOrder.status }}">{{ customerOrder.status }}</span>
+          </dd>
+        </dl>
+      </div>
+      <hr/>
+
+      <jhi-alert-error></jhi-alert-error>
+    </div>
+    <div class="row">
+      <jhi-alert></jhi-alert>
+
+      <div class="col-4">
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="northwindApp.customerOrder.orderDate">Order Date</span></dt>
+          <dd>
+            <span>{{ customerOrder.orderDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="northwindApp.customerOrder.customer">Customer</span></dt>
+          <dd>
+            <div *ngIf="customerOrder.customer">
+              <a [routerLink]="['/customer', customerOrder.customer?.id, 'view']">{{ customerOrder.customer?.id }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="northwindApp.customerOrder.shipAddress">Ship Address</span></dt>
+          <dd>
+            <span>{{ customerOrder.shipAddress }}</span>
+          </dd>
+          <dt><span jhiTranslate="northwindApp.customerOrder.notes">Notes</span></dt>
+          <dd>
+            <span>{{ customerOrder.notes }}</span>
+          </dd>
+        </dl>
+      </div>
+      <div class="col-4">
+        <dl class="row-md jh-entity-details">
+
+          <dt><span jhiTranslate="northwindApp.customerOrder.shippedDate">Shipped Date</span></dt>
+          <dd>
+            <span>{{ customerOrder.shippedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="northwindApp.customerOrder.shippingFee">Shipping Fee</span></dt>
+          <dd>
+            <span>{{ customerOrder.shippingFee }}</span>
+          </dd>
+        </dl>
+      </div>
+      <div class="col-4">
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="northwindApp.customerOrder.paidDate">Paid Date</span></dt>
+          <dd>
+            <span>{{ customerOrder.paidDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="northwindApp.customerOrder.paymentMethod">Payment Method</span></dt>
+          <dd>
+            <span>{{ customerOrder.paymentMethod }}</span>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+        <button type="button" [routerLink]="['/order', customerOrder.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
