@@ -55,20 +55,21 @@
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="northwindApp.customerOrder.customer"
                    for="field_customer">Customer</label>
-            <select class="form-control form-control-sm" id="field_customer" data-cy="customer" name="customer"
-                    formControlName="customer">
-              <option *ngIf="!editForm.get('customer')!.value" [ngValue]="null" selected></option>
-              <option
-                [ngValue]="customerOption.id === editForm.get('customer')!.value?.id ? editForm.get('customer')!.value : customerOption"
-                *ngFor="let customerOption of customersSharedCollection; trackBy: trackCustomerById"
-              >
-                {{ customerOption.id }}
-                |
-                {{ customerOption.firstName }}
-                |
-                {{ customerOption.lastName }}
-              </option>
-            </select>
+            <div class="d-flex">
+              <input
+                id="field_customer"
+                type="text"
+                class="form-control form-control-sm"
+                data-cy="customer" name="customer"
+                formControlName="customer"
+                [ngbTypeahead]="search"
+                (focus)="focus$.next($any($event).target.value)"
+                (click)="click$.next($any($event).target.value)"
+                #instance="ngbTypeahead"
+                [inputFormatter]="formatter"
+                [resultFormatter]="formatter"
+              />
+            </div>
           </div>
           <div
             *ngIf="editForm.get(['customer'])!.invalid && (editForm.get(['customer'])!.dirty || editForm.get(['customer'])!.touched)">
@@ -85,20 +86,24 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.customerOrder.shipAddress" for="field_shipAddress">Ship
             Address</label>
-          <input
-            type="text"
-            class="form-control form-control-sm"
-            name="shipAddress"
-            id="field_shipAddress"
-            data-cy="shipAddress"
-            formControlName="shipAddress"
-          />
+          <div class="d-flex">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              name="shipAddress"
+              id="field_shipAddress"
+              data-cy="shipAddress"
+              formControlName="shipAddress"
+            />
+          </div>
         </div>
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.customerOrder.notes" for="field_notes">Notes</label>
-          <input type="text" class="form-control form-control-sm" name="notes" id="field_notes" data-cy="notes"
-                 formControlName="notes"/>
+          <div class="d-flex">
+            <input type="text" class="form-control form-control-sm" name="notes" id="field_notes" data-cy="notes"
+                   formControlName="notes"/>
+          </div>
         </div>
       </div>
       <div class="col-4" *ngIf="editForm.get('id')!.value != null">
@@ -122,14 +127,16 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.customerOrder.shippingFee" for="field_shippingFee">Shipping
             Fee</label>
-          <input
-            type="number"
-            class="form-control form-control-sm"
-            name="shippingFee"
-            id="field_shippingFee"
-            data-cy="shippingFee"
-            formControlName="shippingFee"
-          />
+          <div class="d-flex">
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              name="shippingFee"
+              id="field_shippingFee"
+              data-cy="shippingFee"
+              formControlName="shippingFee"
+            />
+          </div>
         </div>
       </div>
       <div class="col-4" *ngIf="editForm.get('id')!.value != null">
@@ -153,14 +160,16 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="northwindApp.customerOrder.paymentMethod" for="field_paymentMethod">Payment
             Method</label>
-          <input
-            type="text"
-            class="form-control form-control-sm"
-            name="paymentMethod"
-            id="field_paymentMethod"
-            data-cy="paymentMethod"
-            formControlName="paymentMethod"
-          />
+          <div class="d-flex">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              name="paymentMethod"
+              id="field_paymentMethod"
+              data-cy="paymentMethod"
+              formControlName="paymentMethod"
+            />
+          </div>
         </div>
       </div>
     </div>
