@@ -27,7 +27,7 @@ export class OrderUpdateComponent extends CustomerOrderUpdateComponent {
       map(term => (term === '' ? this.customersSharedCollection
         : this.customersSharedCollection
           .filter(c => {
-            const name = `${c.id!} ${c.firstName ?? ''} ${c.lastName ?? ''}`;
+            const name = `${c.firstName ?? ''} ${c.lastName ?? ''}`;
             if (!name) {
               return false;
             }
@@ -36,6 +36,6 @@ export class OrderUpdateComponent extends CustomerOrderUpdateComponent {
     );
   }
 
-  formatter: any = (customer: ICustomer) => `${customer.id!} ${customer.firstName ?? ''} ${customer.lastName ?? ''}`.trim();
+  formatter: any = (customer: ICustomer) => `${customer.firstName ?? ''} ${customer.lastName ?? ''}`.trim();
 
 }
