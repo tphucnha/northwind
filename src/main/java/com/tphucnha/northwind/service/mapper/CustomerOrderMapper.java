@@ -13,8 +13,6 @@ import java.util.Set;
  */
 @Mapper(componentModel = "spring", uses = {CustomerMapper.class, OrderItemMapper.class})
 public interface CustomerOrderMapper extends EntityMapper<CustomerOrderDTO, CustomerOrder> {
-    @Mapping(target = "customer", source = "customer", qualifiedByName = "id")
-    CustomerOrderDTO toDto(CustomerOrder s);
 
     @Named("id")
     @BeanMapping(ignoreByDefault = true)
