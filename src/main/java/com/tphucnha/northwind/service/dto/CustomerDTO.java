@@ -68,6 +68,13 @@ public class CustomerDTO implements Serializable {
         this.phone = phone;
     }
 
+    public CustomerDTO() {
+    }
+
+    public CustomerDTO(String firstName) {
+        this.firstName = firstName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
