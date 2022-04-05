@@ -57,7 +57,7 @@ public class CustomerOrder implements Serializable {
     @JsonIgnoreProperties(value = { "product", "order" }, allowSetters = true)
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @NotNull
     private Customer customer;
 
