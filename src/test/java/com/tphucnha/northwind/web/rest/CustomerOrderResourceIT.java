@@ -1,25 +1,14 @@
 package com.tphucnha.northwind.web.rest;
 
-import static com.tphucnha.northwind.web.rest.TestUtil.sameNumber;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.tphucnha.northwind.IntegrationTest;
 import com.tphucnha.northwind.domain.Customer;
 import com.tphucnha.northwind.domain.CustomerOrder;
 import com.tphucnha.northwind.domain.enumeration.OrderStatus;
 import com.tphucnha.northwind.repository.CustomerOrderRepository;
+import com.tphucnha.northwind.repository.CustomerRepository;
+import com.tphucnha.northwind.service.dto.CustomerDTO;
 import com.tphucnha.northwind.service.dto.CustomerOrderDTO;
 import com.tphucnha.northwind.service.mapper.CustomerOrderMapper;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +17,20 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static com.tphucnha.northwind.web.rest.TestUtil.sameNumber;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link CustomerOrderResource} REST controller.
@@ -64,6 +67,9 @@ class CustomerOrderResourceIT {
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
+    private static final String DEFAULT_CUSTOMER_FIRSTNAME = "AAAAAAAAAA";
+    private static final String UPDATED_CUSTOMER_FIRSTNAME = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/customer-orders";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -72,6 +78,9 @@ class CustomerOrderResourceIT {
 
     @Autowired
     private CustomerOrderRepository customerOrderRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Autowired
     private CustomerOrderMapper customerOrderMapper;
@@ -174,6 +183,37 @@ class CustomerOrderResourceIT {
         assertThat(testCustomerOrder.getPaidDate()).isEqualTo(DEFAULT_PAID_DATE);
         assertThat(testCustomerOrder.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testCustomerOrder.getNotes()).isEqualTo(DEFAULT_NOTES);
+    }
+
+    @Test
+    @Transactional
+    void createOrderWithNewCustomer() throws Exception {
+        int databaseSizeBeforeCreate = customerOrderRepository.findAll().size();
+        // Create the CustomerOrder
+        CustomerOrderDTO customerOrderDTO = customerOrderMapper.toDto(customerOrder);
+        // New customer with firstName only
+        CustomerDTO customerDTO = new CustomerDTO(DEFAULT_CUSTOMER_FIRSTNAME);
+        customerOrderDTO.setCustomer(customerDTO);
+        restCustomerOrderMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(customerOrderDTO))
+            )
+            .andExpect(status().isCreated());
+
+        // Validate the CustomerOrder in the database
+        List<CustomerOrder> customerOrderList = customerOrderRepository.findAll();
+        assertThat(customerOrderList).hasSize(databaseSizeBeforeCreate + 1);
+        CustomerOrder testCustomerOrder = customerOrderList.get(customerOrderList.size() - 1);
+        assertThat(testCustomerOrder.getOrderDate()).isEqualTo(DEFAULT_ORDER_DATE);
+        assertThat(testCustomerOrder.getShippedDate()).isEqualTo(DEFAULT_SHIPPED_DATE);
+        assertThat(testCustomerOrder.getShipAddress()).isEqualTo(DEFAULT_SHIP_ADDRESS);
+        assertThat(testCustomerOrder.getShippingFee()).isEqualByComparingTo(DEFAULT_SHIPPING_FEE);
+        assertThat(testCustomerOrder.getTaxes()).isEqualByComparingTo(DEFAULT_TAXES);
+        assertThat(testCustomerOrder.getPaymentMethod()).isEqualTo(DEFAULT_PAYMENT_METHOD);
+        assertThat(testCustomerOrder.getPaidDate()).isEqualTo(DEFAULT_PAID_DATE);
+        assertThat(testCustomerOrder.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testCustomerOrder.getNotes()).isEqualTo(DEFAULT_NOTES);
+        assertThat(testCustomerOrder.getCustomer().getFirstName()).isEqualTo(DEFAULT_CUSTOMER_FIRSTNAME);
     }
 
     @Test
@@ -295,6 +335,61 @@ class CustomerOrderResourceIT {
         assertThat(testCustomerOrder.getPaidDate()).isEqualTo(UPDATED_PAID_DATE);
         assertThat(testCustomerOrder.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCustomerOrder.getNotes()).isEqualTo(UPDATED_NOTES);
+    }
+
+
+    @Test
+    @Transactional
+    void putOrderWithNewCustomer() throws Exception {
+        // Initialize the database
+        customerOrderRepository.saveAndFlush(customerOrder);
+
+        int databaseSizeBeforeUpdate = customerOrderRepository.findAll().size();
+        int customerDatabaseSizeBeforeUpdate = customerRepository.findAll().size();
+
+        // Update the customerOrder
+        CustomerOrder updatedCustomerOrder = customerOrderRepository.findById(customerOrder.getId()).get();
+        // Disconnect from session so that the updates on updatedCustomerOrder are not directly saved in db
+        em.detach(updatedCustomerOrder);
+        updatedCustomerOrder
+            .orderDate(UPDATED_ORDER_DATE)
+            .shippedDate(UPDATED_SHIPPED_DATE)
+            .shipAddress(UPDATED_SHIP_ADDRESS)
+            .shippingFee(UPDATED_SHIPPING_FEE)
+            .taxes(UPDATED_TAXES)
+            .paymentMethod(UPDATED_PAYMENT_METHOD)
+            .paidDate(UPDATED_PAID_DATE)
+            .status(UPDATED_STATUS)
+            .notes(UPDATED_NOTES);
+        CustomerOrderDTO customerOrderDTO = customerOrderMapper.toDto(updatedCustomerOrder);
+        customerOrderDTO.setCustomer(new CustomerDTO(UPDATED_CUSTOMER_FIRSTNAME));
+
+        restCustomerOrderMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, customerOrderDTO.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(customerOrderDTO))
+            )
+            .andExpect(status().isOk());
+
+        // Validate Customer
+        List<Customer> customerList = customerRepository.findAll();
+        assertThat(customerList).hasSize(databaseSizeBeforeUpdate + 1);
+
+        // Validate the CustomerOrder in the database
+        List<CustomerOrder> customerOrderList = customerOrderRepository.findAll();
+        assertThat(customerOrderList).hasSize(databaseSizeBeforeUpdate);
+        CustomerOrder testCustomerOrder = customerOrderList.get(customerOrderList.size() - 1);
+        assertThat(testCustomerOrder.getOrderDate()).isEqualTo(UPDATED_ORDER_DATE);
+        assertThat(testCustomerOrder.getShippedDate()).isEqualTo(UPDATED_SHIPPED_DATE);
+        assertThat(testCustomerOrder.getShipAddress()).isEqualTo(UPDATED_SHIP_ADDRESS);
+        assertThat(testCustomerOrder.getShippingFee()).isEqualByComparingTo(UPDATED_SHIPPING_FEE);
+        assertThat(testCustomerOrder.getTaxes()).isEqualByComparingTo(UPDATED_TAXES);
+        assertThat(testCustomerOrder.getPaymentMethod()).isEqualTo(UPDATED_PAYMENT_METHOD);
+        assertThat(testCustomerOrder.getPaidDate()).isEqualTo(UPDATED_PAID_DATE);
+        assertThat(testCustomerOrder.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testCustomerOrder.getNotes()).isEqualTo(UPDATED_NOTES);
+        assertThat(testCustomerOrder.getCustomer().getFirstName()).isEqualTo(UPDATED_CUSTOMER_FIRSTNAME);
     }
 
     @Test

@@ -2,13 +2,14 @@ package com.tphucnha.northwind.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tphucnha.northwind.domain.enumeration.OrderStatus;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 
 /**
  * A CustomerOrder.
@@ -57,7 +58,7 @@ public class CustomerOrder implements Serializable {
     @JsonIgnoreProperties(value = { "product", "order" }, allowSetters = true)
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @NotNull
     private Customer customer;
 

@@ -2,15 +2,17 @@ package com.tphucnha.northwind.service;
 
 import com.tphucnha.northwind.domain.CustomerOrder;
 import com.tphucnha.northwind.repository.CustomerOrderRepository;
+import com.tphucnha.northwind.repository.CustomerRepository;
 import com.tphucnha.northwind.service.dto.CustomerOrderDTO;
 import com.tphucnha.northwind.service.mapper.CustomerOrderMapper;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * Service Implementation for managing {@link CustomerOrder}.
@@ -22,11 +24,14 @@ public class CustomerOrderService {
     private final Logger log = LoggerFactory.getLogger(CustomerOrderService.class);
 
     private final CustomerOrderRepository customerOrderRepository;
+    private final CustomerRepository customerRepository;
 
     private final CustomerOrderMapper customerOrderMapper;
 
-    public CustomerOrderService(CustomerOrderRepository customerOrderRepository, CustomerOrderMapper customerOrderMapper) {
+    public CustomerOrderService(CustomerOrderRepository customerOrderRepository, CustomerOrderMapper customerOrderMapper,
+                                CustomerRepository customerRepository) {
         this.customerOrderRepository = customerOrderRepository;
+        this.customerRepository = customerRepository;
         this.customerOrderMapper = customerOrderMapper;
     }
 
@@ -39,6 +44,9 @@ public class CustomerOrderService {
     public CustomerOrderDTO save(CustomerOrderDTO customerOrderDTO) {
         log.debug("Request to save CustomerOrder : {}", customerOrderDTO);
         CustomerOrder customerOrder = customerOrderMapper.toEntity(customerOrderDTO);
+        if (customerOrderDTO.getCustomer().getId() != null)
+            customerOrder.setCustomer(customerRepository.findById(customerOrderDTO.getCustomer().getId()).orElseThrow());
+
         customerOrder = customerOrderRepository.save(customerOrder);
         return customerOrderMapper.toDto(customerOrder);
     }
